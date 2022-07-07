@@ -21,7 +21,7 @@ describe("Given de user redux", () => {
         date: "1-01-1111",
         reviews: [{ img: [], video: [], comment: "test", score: 5 }],
     };
-    describe("When loadUserAction ", () => {
+    describe("When loadReviewAction", () => {
         test("Then it shoul render user mock", () => {
             const initialState: iReview[] = [];
             const newState = reviewReducer(
@@ -34,7 +34,7 @@ describe("Given de user redux", () => {
         });
     });
 
-    describe("When createUserAction ", () => {
+    describe("When createReviewAction", () => {
         test("Then it shoul be add newUser", () => {
             const initialState: iReview[] = [mockReview];
             const newUser = { ...mockReview, _id: "2", date: "2-2-2222" };
@@ -48,7 +48,7 @@ describe("Given de user redux", () => {
         });
     });
 
-    describe("When modifyUserAction ", () => {
+    describe("When modifyReviewAction", () => {
         test("Then it shoul be modify mockUser", () => {
             const initialState: iReview[] = [mockReview];
             const modifyUser = { ...mockReview, date: "3-3-3333" };
@@ -73,7 +73,7 @@ describe("Given de user redux", () => {
         });
     });
 
-    describe("When deleteUserAction ", () => {
+    describe("When deleteReviewAction", () => {
         test("Then it shoul be delete mockUser", () => {
             const initialState: iReview[] = [mockReview];
 
