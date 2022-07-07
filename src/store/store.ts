@@ -1,19 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { iProfesional, iReview, iUser } from "../interfaces/interfaces";
+import { iProfesional } from "../interfaces/interfaces";
+import { Review } from "../models/review.model";
+import { User } from "../models/user.model";
 import { profesionalReducer } from "../redux/profesional-reducer/action.reducer";
 import { reviewReducer } from "../redux/review-reducer/action.reducer";
 import { userReducer } from "../redux/user-reducer/action.reducer";
 
 export interface iStore {
-    user: Array<iUser>;
+    user: Array<User>;
     profesional: Array<iProfesional>;
-    review: Array<iReview>;
+    review: Array<Review>;
 }
 
 export const preloadedState: iStore = {
-    user: [] as Array<iUser>,
+    user: [] as Array<User>,
     profesional: [] as Array<iProfesional>,
-    review: [] as Array<iReview>,
+    review: [] as Array<Review>,
 };
 
 export const store = configureStore({
