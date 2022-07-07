@@ -51,7 +51,7 @@
             "!src/services/test-utils.tsx",
             "!src/serviceWorker.ts",
             "!src/reportWebVitals.ts",
-            "!src/redux/action.types.ts",
+            "!src/redux/**/action.types.ts",
             "!src/interfaces/*.ts",
             "!src/react-app-env.d.ts"
         ]
