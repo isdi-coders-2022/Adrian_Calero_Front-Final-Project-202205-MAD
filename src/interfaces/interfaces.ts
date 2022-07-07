@@ -25,10 +25,12 @@ export interface iReview {
     worker: iProfesional;
     client: iUser;
     date: string;
-    reviews: {
-        img: string[];
-        video: string[];
-        comment: string;
-        score: number;
-    };
+    reviews: [
+        {
+            img: string[];
+            video: string[];
+            comment: string;
+            score: number;
+        }
+    ];
 }
