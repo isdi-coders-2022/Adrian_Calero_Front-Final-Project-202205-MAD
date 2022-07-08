@@ -1,4 +1,4 @@
-import { iReview } from "../interfaces/interfaces";
+import { iProfesional, iReview } from "../interfaces/interfaces";
 
 export class HttpReview {
     url: string;
@@ -6,8 +6,8 @@ export class HttpReview {
         this.url = "http://localhost:3600/review";
     }
 
-    getAllInProfesionals(review: iReview): Promise<iReview[]> {
-        return fetch(this.url + `/${review.worker._id}`).then((resp) =>
+    getAllInProfesionals(profesional: iProfesional): Promise<iReview[]> {
+        return fetch(this.url + `/${profesional._id}`).then((resp) =>
             resp.json()
         );
     }

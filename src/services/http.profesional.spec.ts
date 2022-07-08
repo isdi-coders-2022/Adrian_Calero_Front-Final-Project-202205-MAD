@@ -1,7 +1,7 @@
 import { HttpProfesional } from "./http.profesional";
 
-describe("Given the http.user", () => {
-    describe("When i use the method getAllUsers", () => {
+describe("Given the http.profesional", () => {
+    describe("When i use the method getAllProfesional", () => {
         test("Then should be render", async () => {
             global.fetch = jest.fn().mockResolvedValue({
                 json: jest.fn().mockResolvedValue([
@@ -26,7 +26,7 @@ describe("Given the http.user", () => {
         });
     });
 
-    describe("When i use the method getUser", () => {
+    describe("When i use the method getProfesional", () => {
         test("Then should be render", async () => {
             const profesional = {
                 _id: "1",
