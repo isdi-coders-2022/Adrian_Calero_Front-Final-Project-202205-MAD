@@ -7,9 +7,9 @@ export function FooterHome() {
     return(
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3} >
     <BottomNavigation showLabels >
-<BottomNavigationAction label="Home" icon={<HomeIcon/>} />
+<BottomNavigationAction label="Home" href="/home" icon={<HomeIcon/>} />
   <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
-  <BottomNavigationAction label="Login" icon={<LoginIcon />} />
+  <BottomNavigationAction label="Login" href="/register" icon={<LoginIcon />} />
     </BottomNavigation>
     </Paper>
     )
