@@ -9,7 +9,7 @@ export function FooterHome() {
     <BottomNavigation showLabels >
 <BottomNavigationAction label="Home" href="/home" icon={<HomeIcon/>} />
   <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
-  <BottomNavigationAction label="Login" href="/register" icon={<LoginIcon />} />
+  <BottomNavigationAction label="Register/Login" href="/registerorlogin" icon={<LoginIcon />} />
     </BottomNavigation>
     </Paper>
     )
