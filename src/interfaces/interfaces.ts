@@ -13,7 +13,7 @@ export interface iProfesional {
 
 export interface iUser {
     _id?: string;
-    avatar: string;
+    avatar?: string;
     userName: string;
     email: string;
     passwd: string;
@@ -33,4 +33,9 @@ export interface iReview {
             score: number;
         }
     ];
+}
+
+export interface iLogin {
+    user: iUser;
+    token: string;
 }

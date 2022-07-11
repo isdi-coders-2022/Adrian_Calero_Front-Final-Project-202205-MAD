@@ -1,12 +1,12 @@
-import { Form } from "../components/register/form";
+import { FormLogin } from "../components/login/form";
 import { HeaderRegister } from "../components/register/header";
-import "./register.css";
+import "./login.css";
 
-export default function Register() {
+export default function Login() {
     return (
         <>
             <HeaderRegister />
-            <Form />
+            <FormLogin />
         </>
     );
 }
