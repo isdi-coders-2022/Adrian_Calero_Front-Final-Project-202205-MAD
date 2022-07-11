@@ -1,79 +1,65 @@
-import { iUser } from "../../interfaces/interfaces";
+import { AnyAction } from "@reduxjs/toolkit";
+import { iLogin } from "../../interfaces/interfaces";
 import * as ac from "./action.creator";
 import { userReducer } from "./action.reducer";
 
 describe("Given de user redux", () => {
-    const mockUser: iUser = {
-        _id: "1",
-        avatar: "url",
-        userName: "test",
-        email: "test@test.com",
-        passwd: "1234",
-        favorites: [],
+    const mockUser: iLogin = {
+        token: "1",
+        user: {
+            _id: "1",
+            avatar: "url",
+            userName: "test",
+            email: "test@test.com",
+            passwd: "1234",
+            favorites: [],
+        },
     };
-    describe("When loadUserAction ", () => {
-        test("Then it shoul render user mock", () => {
-            const initialState: iUser[] = [];
-            const newState = userReducer(
-                initialState,
-                ac.loadUserAction([mockUser])
-            );
-
-            expect(newState).toHaveLength(1);
-            expect(newState).toStrictEqual([mockUser]);
-        });
-    });
 
     describe("When createUserAction ", () => {
         test("Then it shoul be add newUser", () => {
-            const initialState: iUser[] = [mockUser];
+            const initialState: iLogin = mockUser;
             const newUser = { ...mockUser, _id: "2", userName: "pepee" };
             const newState = userReducer(
                 initialState,
-                ac.createUserAction(newUser)
+                ac.loginUserAction(newUser)
             );
 
-            expect(newState).toHaveLength(2);
-            expect(newState).toStrictEqual([mockUser, newUser]);
+            expect(newState).toStrictEqual(newUser);
         });
     });
 
     describe("When modifyUserAction ", () => {
         test("Then it shoul be modify mockUser", () => {
-            const initialState: iUser[] = [mockUser];
-            const modifyUser = { ...mockUser, userName: "pepee" };
+            const initialState: iLogin = mockUser;
+            const modifyUser = {
+                ...mockUser,
+                user: { ...mockUser.user, userName: "updated" },
+            };
             const newState = userReducer(
                 initialState,
                 ac.modifyUserAction(modifyUser)
             );
 
-            expect(newState).toHaveLength(1);
-            expect(newState).toStrictEqual([modifyUser]);
+            expect(newState).toEqual(modifyUser);
         });
         test("If it not modify, then it shoul be not modify mockUser", () => {
-            const initialState: iUser[] = [mockUser];
+            const initialState: iLogin = mockUser;
             const modifyUser = { ...mockUser, _id: "3" };
             const newState = userReducer(
                 initialState,
                 ac.modifyUserAction(modifyUser)
             );
 
-            expect(newState).toHaveLength(1);
-            expect(newState).toStrictEqual([mockUser]);
+            expect(newState).toStrictEqual(mockUser);
         });
     });
 
-    describe("When deleteUserAction ", () => {
-        test("Then it shoul be delete mockUser", () => {
-            const initialState: iUser[] = [mockUser];
+    describe("When caseDefault is called", () => {
+        test("Then it shoul be same state", () => {
+            const state = userReducer(mockUser, {} as AnyAction);
 
-            const newState = userReducer(
-                initialState,
-                ac.deleteUserAction(mockUser)
-            );
-
-            expect(newState).toHaveLength(0);
-            expect(newState).toStrictEqual([]);
+            expect(state).toEqual(mockUser);
         });
     });
 });
