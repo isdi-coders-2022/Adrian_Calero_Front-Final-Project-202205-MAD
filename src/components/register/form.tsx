@@ -11,6 +11,7 @@ import { User } from "../../models/user.model";
 import { HttpUser } from "../../services/http.user";
 import { useDispatch } from "react-redux";
 import * as ac from "../../redux/user-reducer/action.creator";
+import { useNavigate } from "react-router-dom";
 
 const Input = styled("input")({
     display: "none",
@@ -18,7 +19,7 @@ const Input = styled("input")({
 
 export function Form() {
     const api = new HttpUser();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         avatar: "",
@@ -34,22 +35,23 @@ export function Form() {
 
     function handleSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
+        try {
+            const newUser: User = {
+                ...new User(
+                    formData.avatar,
+                    formData.userName,
+                    formData.email,
+                    formData.passwd,
+                    []
+                ),
+            };
 
-        const newUser: User = {
-            ...new User(
-                formData.avatar,
-                formData.userName,
-                formData.email,
-                formData.passwd,
-                []
-            ),
-        };
+            api.registerUser(newUser).then((resp) => console.log(resp));
 
-        api.registerUser(newUser).then((resp) =>
-            dispatch(ac.createUserAction(newUser))
-        );
+            setFormData({ avatar: "", userName: "", email: "", passwd: "" });
 
-        setFormData({ avatar: "", userName: "", email: "", passwd: "" });
+            navigate("/login");
+        } catch (error) {}
     }
 
     return (
@@ -77,6 +79,7 @@ export function Form() {
                 name="userName"
                 required={true}
                 margin="normal"
+                onChange={handleChange}
             />
             <TextField
                 className="inputText"
@@ -85,6 +88,7 @@ export function Form() {
                 name="email"
                 required={true}
                 margin="normal"
+                onChange={handleChange}
             />
             <TextField
                 className="inputText"
@@ -94,6 +98,7 @@ export function Form() {
                 required={true}
                 type="password"
                 margin="normal"
+                onChange={handleChange}
             />
             <Button type="submit" variant="contained">
                 Register

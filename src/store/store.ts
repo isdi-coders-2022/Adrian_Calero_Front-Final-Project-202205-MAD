@@ -24,5 +24,5 @@ export const store = configureStore({
         profesional: profesionalReducer,
         review: reviewReducer,
     },
-    preloadedState,
+    // preloadedState,
 });

@@ -1,10 +1,12 @@
 import { createAction } from "@reduxjs/toolkit";
-import { iUser } from "../../interfaces/interfaces";
+import { iLogin, iUser } from "../../interfaces/interfaces";
 import { actionTypes } from "./action.types";
 
-export const loadUserAction = createAction<iUser[]>(actionTypes["user@load"]);
+export const loginUserAction = createAction<iLogin>(actionTypes["user@login"]);
 
-export const createUserAction = createAction<iUser>(actionTypes["user@create"]);
+export const createUserAction = createAction<iLogin>(
+    actionTypes["user@create"]
+);
 
 export const modifyUserAction = createAction<iUser>(actionTypes["user@modify"]);
 

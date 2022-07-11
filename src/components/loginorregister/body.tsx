@@ -1,16 +1,17 @@
 import { Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export function ButtonsLoginOrRegister() {
     return (
         <>
             <div className="buttons-container">
-                <Button variant="contained" href="/login">
-                    Login
-                </Button>
+                <Link to="/login">
+                    <Button variant="contained">Login</Button>
+                </Link>
                 <Typography variant="h6">or</Typography>
-                <Button variant="contained" href="/register">
-                    Register
-                </Button>
+                <Link to="/register">
+                    <Button variant="contained">Register</Button>
+                </Link>
             </div>
         </>
     );
