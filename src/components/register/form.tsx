@@ -80,6 +80,7 @@ export function Form() {
             <Typography variant="subtitle1">Add avatar file:</Typography>
             <label htmlFor="icon-button-file">
                 <Input
+                    data-testid="fileupload"
                     id="icon-button-file"
                     type="file"
                     name="avatar"
