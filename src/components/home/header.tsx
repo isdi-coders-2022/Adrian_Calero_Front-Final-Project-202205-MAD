@@ -24,10 +24,7 @@ export function HeaderHome() {
             <div>
                 <Typography variant="h3">Your Solution</Typography>
                 {(user.token || logged) && (
-                    <>
-                        <Typography variant="h4">
-                            Welcome {logged.user.userName}
-                        </Typography>
+                    <div className="welcome">
                         {!logged.user.avatar ? (
                             <Avatar
                                 alt={logged.user.userName}
@@ -46,16 +43,18 @@ export function HeaderHome() {
                                 sx={{ width: 90, height: 90 }}
                             />
                         )}
-                    </>
+                        <Typography variant="h4">
+                            Welcome {logged.user.userName}
+                        </Typography>
+                    </div>
                 )}
-                <InputLabel>Search</InputLabel>
-                <OutlinedInput
+                {/* <OutlinedInput
                     startAdornment={
                         <InputAdornment position="end">
                             <Search />
                         </InputAdornment>
                     }
-                />
+                /> */}
             </div>
         </header>
     );
