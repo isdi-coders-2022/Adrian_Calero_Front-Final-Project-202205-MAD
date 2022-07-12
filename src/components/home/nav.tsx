@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Tabs } from "@mui/material";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import WaterDamageIcon from "@mui/icons-material/WaterDamage";
@@ -10,36 +10,38 @@ export function NavIcons() {
     return (
         <nav>
             <ul>
-                <li>
-                    <Button variant="outlined">
-                        <ElectricBoltIcon />
-                    </Button>
-                </li>
-                <li>
-                    <Button variant="outlined">
-                        <HomeRepairServiceIcon />
-                    </Button>
-                </li>
-                <li>
-                    <Button variant="outlined">
-                        <WaterDamageIcon />
-                    </Button>
-                </li>
-                <li>
-                    <Button variant="outlined">
-                        <SquareFootIcon />
-                    </Button>
-                </li>
-                <li>
-                    <Button variant="outlined">
-                        <FormatPaintIcon />
-                    </Button>
-                </li>
-                <li>
-                    <Button variant="outlined">
-                        <LocalShippingIcon />
-                    </Button>
-                </li>
+                <Tabs variant="scrollable" scrollButtons>
+                    <li>
+                        <Button variant="outlined">
+                            <ElectricBoltIcon />
+                        </Button>
+                    </li>
+                    <li>
+                        <Button variant="outlined">
+                            <HomeRepairServiceIcon />
+                        </Button>
+                    </li>
+                    <li>
+                        <Button variant="outlined">
+                            <WaterDamageIcon />
+                        </Button>
+                    </li>
+                    <li>
+                        <Button variant="outlined">
+                            <SquareFootIcon />
+                        </Button>
+                    </li>
+                    <li>
+                        <Button variant="outlined">
+                            <FormatPaintIcon />
+                        </Button>
+                    </li>
+                    <li>
+                        <Button variant="outlined">
+                            <LocalShippingIcon />
+                        </Button>
+                    </li>
+                </Tabs>
             </ul>
         </nav>
     );
