@@ -8,6 +8,7 @@ function App() {
     );
     const RegisterPage = React.lazy(() => import("./pages/register"));
     const LoginPage = React.lazy(() => import("./pages/login"));
+    const SearchPage = React.lazy(() => import("./pages/search"));
 
     const options = [
         { path: "", label: "Home", page: <Home></Home> },
@@ -23,6 +24,7 @@ function App() {
             page: <RegisterPage></RegisterPage>,
         },
         { path: "/login", label: "Login", page: <LoginPage></LoginPage> },
+        { path: "/search", label: "Search", page: <SearchPage></SearchPage> },
     ];
     return (
         <React.Suspense>
