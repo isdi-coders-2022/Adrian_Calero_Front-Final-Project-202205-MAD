@@ -5,6 +5,7 @@ import { HttpUser } from "../../services/http.user";
 import * as ac from "../../redux/user-reducer/action.creator";
 import { iLogin } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
+import { LocalStorage } from "../../services/localStorage";
 
 export function FormLogin() {
     let navigate = useNavigate();
@@ -30,9 +31,11 @@ export function FormLogin() {
             };
 
             api.loginUser(userLogin).then((resp) => {
-                console.log(resp, "RESP API");
                 dispatch(ac.loginUserAction(resp as unknown as iLogin));
+                const storage = new LocalStorage(resp as unknown as iLogin);
+                storage.setItem();
             });
+
             navigate("/home");
         } catch (error) {}
     }
