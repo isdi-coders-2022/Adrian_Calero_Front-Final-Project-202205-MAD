@@ -33,6 +33,7 @@ export function FormLogin() {
             api.loginUser(userLogin).then((resp) => {
                 dispatch(ac.loginUserAction(resp as unknown as iLogin));
                 const storage = new LocalStorage(resp as unknown as iLogin);
+                storage.removeItem();
                 storage.setItem();
             });
 
