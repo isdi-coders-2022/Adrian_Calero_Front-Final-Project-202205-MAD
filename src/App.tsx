@@ -24,7 +24,11 @@ function App() {
             page: <RegisterPage></RegisterPage>,
         },
         { path: "/login", label: "Login", page: <LoginPage></LoginPage> },
-        { path: "/search", label: "Search", page: <SearchPage></SearchPage> },
+        {
+            path: "/search/:profesion",
+            label: "Search",
+            page: <SearchPage></SearchPage>,
+        },
     ];
     return (
         <React.Suspense>
