@@ -16,8 +16,8 @@ export function HeaderHome() {
     const user = useSelector(
         (state: iStore) => state.user as unknown as iLogin
     );
-    const login = new LocalStorage(user);
-    const logged = login.getItem();
+    const userLocalStoage = new LocalStorage(user);
+    const logged = userLocalStoage.getItem();
     const initialLetter = (logged.user.userName[0] as string).toUpperCase();
     return (
         <header>
