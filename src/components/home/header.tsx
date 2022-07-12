@@ -18,6 +18,7 @@ export function HeaderHome() {
     );
     const login = new LocalStorage(user);
     const logged = login.getItem();
+    const initialLetter = (logged.user.userName[0] as string).toUpperCase();
     return (
         <header>
             <div>
@@ -25,14 +26,26 @@ export function HeaderHome() {
                 {(user.token || logged) && (
                     <>
                         <Typography variant="h4">
-                            {" "}
                             Welcome {logged.user.userName}
                         </Typography>
-                        <Avatar
-                            alt={logged.user.userName}
-                            src={logged.user.avatar}
-                            sx={{ width: 120, height: 120 }}
-                        />
+                        {!logged.user.avatar ? (
+                            <Avatar
+                                alt={logged.user.userName}
+                                sx={{
+                                    width: 90,
+                                    height: 90,
+                                    bgcolor: "#4FB3AA",
+                                }}
+                            >
+                                {initialLetter}
+                            </Avatar>
+                        ) : (
+                            <Avatar
+                                alt={logged.user.userName}
+                                src={logged.user.avatar}
+                                sx={{ width: 90, height: 90 }}
+                            />
+                        )}
                     </>
                 )}
                 <InputLabel>Search</InputLabel>
