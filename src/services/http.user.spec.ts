@@ -1,3 +1,4 @@
+import { iUser } from "../interfaces/interfaces";
 import { User } from "../models/user.model";
 import { HttpUser } from "./http.user";
 
@@ -49,12 +50,18 @@ describe("Given the http.user", () => {
         test("Then should be render", async () => {
             const user = { userName: "test", passwd: "1234" };
             global.fetch = jest.fn().mockResolvedValue({
-                json: jest.fn().mockResolvedValue(user),
+                json: jest
+                    .fn()
+                    .mockResolvedValue({
+                        token: "",
+                        user: { userName: "test" },
+                    }),
             });
             const result = await new HttpUser().loginUser(user);
+            console.log("RESULTADO", result);
 
             expect(fetch).toBeCalled();
-            expect(result.userName).toBe("test");
+            expect(result.user.userName).toBe("test");
         });
     });
 

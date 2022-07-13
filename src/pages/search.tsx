@@ -1,8 +1,14 @@
-import { useParams } from "react-router-dom";
+import { FooterHome } from "../components/home/footer";
+import { HeaderHome } from "../components/home/header";
+import { SearchAndFilter } from "../components/search/search&filter";
+import "./search.css";
 
 export default function Search() {
-    const { profesion } = useParams();
-    console.log(profesion);
-
-    return <></>;
+    return (
+        <>
+            <HeaderHome />
+            <SearchAndFilter />
+            <FooterHome />
+        </>
+    );
 }

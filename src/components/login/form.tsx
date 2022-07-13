@@ -6,6 +6,7 @@ import * as ac from "../../redux/user-reducer/action.creator";
 import { iLogin } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import { LocalStorage } from "../../services/localStorage";
+import Swal from "sweetalert2";
 
 export function FormLogin() {
     let navigate = useNavigate();
@@ -24,21 +25,28 @@ export function FormLogin() {
 
     function handleSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        try {
-            const userLogin = {
-                userName: formData.userName,
-                passwd: formData.passwd,
-            };
 
-            api.loginUser(userLogin).then((resp) => {
+        const userLogin = {
+            userName: formData.userName,
+            passwd: formData.passwd,
+        };
+
+        api.loginUser(userLogin).then((resp) => {
+            if (resp.token) {
                 dispatch(ac.loginUserAction(resp as unknown as iLogin));
                 const storage = new LocalStorage(resp as unknown as iLogin);
                 storage.removeItem();
                 storage.setItem();
-            });
-
-            navigate("/home");
-        } catch (error) {}
+                navigate("/home");
+            } else {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Invalid Username or Password",
+                    icon: "error",
+                    confirmButtonText: "Cool",
+                });
+            }
+        });
     }
 
     return (

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "../../store/store";
 import { FooterHome } from "./footer";
 
@@ -8,11 +9,13 @@ describe("Given the component NavIcons", () => {
         test("Then it should be render all buttons", () => {
             render(
                 <Provider store={store}>
-                    <FooterHome />
+                    <BrowserRouter>
+                        <FooterHome />
+                    </BrowserRouter>
                 </Provider>
             );
 
-            expect(screen.getAllByRole("button")).toHaveLength(1);
+            expect(screen.getAllByRole("link")).toHaveLength(3);
         });
     });
 });
