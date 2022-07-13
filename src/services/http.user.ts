@@ -1,4 +1,4 @@
-import { iUser } from "../interfaces/interfaces";
+import { iLogin, iUser } from "../interfaces/interfaces";
 
 export class HttpUser {
     url: string;
@@ -21,7 +21,7 @@ export class HttpUser {
         }).then((resp) => resp.json());
     }
 
-    loginUser(user: Partial<iUser>): Promise<iUser> {
+    loginUser(user: Partial<iUser>): Promise<iLogin> {
         return fetch(this.url + "/login", {
             method: "POST",
             body: JSON.stringify(user),

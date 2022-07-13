@@ -1,34 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
 *{box-sizing: border-box;
-list-style: none;}
-
-html, body{
+list-style: none;
 margin: 0;
 padding: 0;
+font-family: 'Fira Sans', sans-serif;
 }
 
-h1{font-family: 'Lora', serif;
-font-weight: 700;
+
+
+h1{
+    font-family: 'Bebas Neue', cursive;
+    color: #219ebc;
+    margin-left: 1rem;
 }
 
 header{
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    height: 15vh;
 }
-
-ul{
+header img{
+    width: 6rem;
+    clip-path: circle(30% at 50% 42%); 
+}
+.img-home{
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    overflow: scroll;
-    margin: 0;
-    padding: 0;
-
 }
+
+.icon-nav{
+    text-decoration: none;
+    overflow: auto;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 6.5vh;
+}
+
+.icon-nav a{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 3rem;
+    color: #6d6875;
+}
+
+
+
+
 
 ul li{
     margin: 0 2rem;
+}
+
+.navigation{
+    background-color: white;
+     width: 100%;
+     height: 5vh;
+    display: flex;
+    align-items: center; 
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    justify-content: space-between;
+}
+
+.navigation a{
+    color: #6d6875;
+}
+
+.body{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 1rem;
 }
 
 .welcome{
@@ -36,4 +86,16 @@ ul li{
     width: 40vh;
     align-items: center ;
     justify-content: space-around;
+}
+
+.welcome div{
+    display: flex;
+    width: 5rem;
+    height: 5rem;
+    background-color: #219ebc;
+    color: white;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
