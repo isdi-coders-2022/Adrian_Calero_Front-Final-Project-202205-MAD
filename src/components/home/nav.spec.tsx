@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "../../store/store";
 import { NavIcons } from "./nav";
 
@@ -8,11 +9,13 @@ describe("Given the component NavIcons", () => {
         test("Then it should be render all buttons", () => {
             render(
                 <Provider store={store}>
-                    <NavIcons />
+                    <BrowserRouter>
+                        <NavIcons />
+                    </BrowserRouter>
                 </Provider>
             );
 
-            expect(screen.getAllByRole("button")).toHaveLength(6);
+            expect(screen.getByText(/Electrician/i)).toBeInTheDocument();
         });
     });
 });
