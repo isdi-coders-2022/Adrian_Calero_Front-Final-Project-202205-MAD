@@ -5,6 +5,18 @@ li img{
     clip-path: circle(30% at 50% 42%); 
 }
 
+ul{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+ul a{
+    margin: 1rem 1rem;
+    text-decoration: none;
+    color: black;
+}
+
 .card-profesional{
     width: 100%;
     display: flex;
@@ -27,4 +39,33 @@ li img{
     height: 3rem;
     font-family: 'Fira Sans', sans-serif;
 
+}
+
+.container-search{
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.searcher{
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 3rem;
+    width: 20rem;
+    height: 3rem;
+}
+
+.searcher input{
+    border: none;
+    width: 85%;
+    height: 100%;
+    font-size: larger;
+}
+
+select{
+    height: 3rem;
+    width: 5rem;
+    border-radius: 1rem;
 }

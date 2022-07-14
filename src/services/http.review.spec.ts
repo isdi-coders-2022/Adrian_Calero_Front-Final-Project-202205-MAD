@@ -39,13 +39,13 @@ describe("Given the http.review", () => {
                             favorites: [],
                         },
                         "1-01-1111",
-                        [{ img: [], video: [], comment: "test", score: 5 }]
+                        { img: [], video: [], comment: "test", score: 5 }
                     ),
                 ]),
             });
 
             const result = await new HttpReview().getAllInProfesionals(
-                profesional
+                profesional._id
             );
 
             expect(fetch).toBeCalled();
@@ -76,7 +76,7 @@ describe("Given the http.review", () => {
                     favorites: [],
                 },
                 "1-01-1111",
-                [{ img: [], video: [], comment: "test", score: 5 }]
+                { img: [], video: [], comment: "test", score: 5 }
             );
 
             global.fetch = jest.fn().mockResolvedValue({
@@ -113,7 +113,7 @@ describe("Given the http.review", () => {
                     favorites: [],
                 },
                 "1-01-1111",
-                [{ img: [], video: [], comment: "test", score: 5 }]
+                { img: [], video: [], comment: "test", score: 5 }
             );
 
             const modifyReview = { ...review, date: "2-02-2222" };
@@ -152,7 +152,7 @@ describe("Given the http.review", () => {
                     favorites: [],
                 },
                 "1-01-1111",
-                [{ img: [], video: [], comment: "test", score: 5 }]
+                { img: [], video: [], comment: "test", score: 5 }
             );
 
             global.fetch = jest.fn().mockResolvedValue({

@@ -19,7 +19,7 @@ describe("Given de user redux", () => {
             favorites: [],
         },
         date: "1-01-1111",
-        reviews: [{ img: [], video: [], comment: "test", score: 5 }],
+        reviews: { img: [], video: [], comment: "test", score: 5 },
     };
     describe("When loadReviewAction", () => {
         test("Then it shoul render user mock", () => {

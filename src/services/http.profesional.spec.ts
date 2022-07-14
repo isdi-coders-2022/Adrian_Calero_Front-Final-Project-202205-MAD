@@ -44,7 +44,7 @@ describe("Given the http.profesional", () => {
                 json: jest.fn().mockResolvedValue(profesional),
             });
             const result = await new HttpProfesional().getProfesional(
-                profesional
+                profesional._id
             );
 
             expect(fetch).toBeCalled();
