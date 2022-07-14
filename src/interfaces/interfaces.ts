@@ -10,7 +10,6 @@ export interface iProfesional {
         video: string;
     };
 }
-
 export interface iUser {
     _id?: string;
     avatar?: string;
@@ -25,14 +24,12 @@ export interface iReview {
     worker: iProfesional;
     client: iUser;
     date: string;
-    reviews: [
-        {
-            img: string[];
-            video: string[];
-            comment: string;
-            score: number;
-        }
-    ];
+    reviews: {
+        img: string[];
+        video: string[];
+        comment: string;
+        score: number;
+    };
 }
 
 export interface iLogin {
