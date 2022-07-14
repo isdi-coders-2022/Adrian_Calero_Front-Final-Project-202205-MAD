@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
+import { HttpProfesional } from "./services/http.profesional";
+import * as ac from "./redux/profesional-reducer/action.creator";
 
 function App() {
+    const api = new HttpProfesional();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        api.getAllProfesional().then((resp) =>
+            dispatch(ac.loadProfesionalAction(resp))
+        );
+    }, [dispatch]);
+
     const RegisterOrLoginPage = React.lazy(
         () => import("./pages/registerorlogin")
     );
