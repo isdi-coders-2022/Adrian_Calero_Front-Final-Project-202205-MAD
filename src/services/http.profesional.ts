@@ -10,9 +10,7 @@ export class HttpProfesional {
         return fetch(this.url).then((resp) => resp.json());
     }
 
-    getProfesional(profesional: iProfesional): Promise<iProfesional> {
-        return fetch(this.url + `/${profesional._id}`).then((resp) =>
-            resp.json()
-        );
+    getProfesional(id: string): Promise<iProfesional> {
+        return fetch(this.url + `/${id}`).then((resp) => resp.json());
     }
 }
