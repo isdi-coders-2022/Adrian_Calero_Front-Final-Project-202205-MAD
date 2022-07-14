@@ -20,17 +20,17 @@ export function SearchAndFilter() {
 
     return (
         <>
-            <div className="searcher">
-                <Search />
+            <div className="container-search">
+                <div className="searcher">
+                    <Search />
 
-                <input
-                    type="text"
-                    value={search}
-                    data-testid="search"
-                    onChange={handlerSearch}
-                />
-            </div>
-            <div>
+                    <input
+                        type="text"
+                        value={search}
+                        data-testid="search"
+                        onChange={handlerSearch}
+                    />
+                </div>
                 <select value={type} onChange={handleChange} className="select">
                     <option value="electrician">Electrician</option>
                     <option value="mechanic">Mechanic</option>
@@ -40,6 +40,8 @@ export function SearchAndFilter() {
                     <option value="shipper">Shipper</option>
                 </select>
             </div>
+
+            <div></div>
 
             <ListProfesional type={type} search={search} />
         </>
