@@ -9,6 +9,7 @@ function App() {
     const RegisterPage = React.lazy(() => import("./pages/register"));
     const LoginPage = React.lazy(() => import("./pages/login"));
     const SearchPage = React.lazy(() => import("./pages/search"));
+    const DetailPage = React.lazy(() => import("./pages/detail"));
 
     const options = [
         { path: "", label: "Home", page: <Home></Home> },
@@ -28,6 +29,11 @@ function App() {
             path: "/search/:profesion",
             label: "Search",
             page: <SearchPage></SearchPage>,
+        },
+        {
+            path: "/detail/:id",
+            label: "Detail",
+            page: <DetailPage></DetailPage>,
         },
     ];
     return (
