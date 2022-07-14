@@ -5,13 +5,11 @@ export class Review implements iReview {
         public worker: iProfesional,
         public client: iUser,
         public date: string,
-        public reviews: [
-            {
-                img: Array<string>;
-                video: Array<string>;
-                comment: string;
-                score: number;
-            }
-        ]
+        public reviews: {
+            img: Array<string>;
+            video: Array<string>;
+            comment: string;
+            score: number;
+        }
     ) {}
 }

@@ -1,10 +1,10 @@
 import { iLogin } from "../interfaces/interfaces";
 
 export class LocalStorage {
-    constructor(public item: iLogin) {}
+    constructor() {}
 
-    setItem() {
-        localStorage.setItem("login", JSON.stringify(this.item));
+    setItem(login: iLogin) {
+        localStorage.setItem("login", JSON.stringify(login));
     }
 
     getItem() {

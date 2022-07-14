@@ -1,3 +1,3 @@
 export enum actionTypes {
-    "profesional@load" = "user@load",
+    "profesional@load" = "profesional@load",
 }

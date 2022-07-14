@@ -34,9 +34,9 @@ export function FormLogin() {
         api.loginUser(userLogin).then((resp) => {
             if (resp.token) {
                 dispatch(ac.loginUserAction(resp as unknown as iLogin));
-                const storage = new LocalStorage(resp as unknown as iLogin);
+                const storage = new LocalStorage();
                 storage.removeItem();
-                storage.setItem();
+                storage.setItem(resp);
                 navigate("/home");
             } else {
                 Swal.fire({
