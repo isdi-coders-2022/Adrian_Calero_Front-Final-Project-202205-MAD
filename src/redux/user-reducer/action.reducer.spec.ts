@@ -1,5 +1,5 @@
 import { AnyAction } from "@reduxjs/toolkit";
-import { iLogin } from "../../interfaces/interfaces";
+import { iLogin, iUser } from "../../interfaces/interfaces";
 import * as ac from "./action.creator";
 import { userReducer } from "./action.reducer";
 
@@ -16,50 +16,50 @@ describe("Given de user redux", () => {
         },
     };
 
-    describe("When createUserAction ", () => {
-        test("Then it shoul be add newUser", () => {
-            const initialState: iLogin = mockUser;
-            const newUser = { ...mockUser, _id: "2", userName: "pepee" };
+    describe("When loginUserAction", () => {
+        test("Then it shoul be logged", () => {
+            const initialState: iUser = mockUser.user;
+            const newUser = { ...mockUser, _id: "2", userName: "pepe" };
             const newState = userReducer(
                 initialState,
                 ac.loginUserAction(newUser)
             );
 
-            expect(newState).toStrictEqual(newUser);
+            expect(newState).toEqual(newUser.user);
         });
     });
 
-    describe("When modifyUserAction ", () => {
+    describe("When modifyUserAction", () => {
         test("Then it shoul be modify mockUser", () => {
-            const initialState: iLogin = mockUser;
+            const initialState: iUser = mockUser.user;
             const modifyUser = {
                 ...mockUser,
                 user: { ...mockUser.user, userName: "updated" },
             };
             const newState = userReducer(
                 initialState,
-                ac.modifyUserAction(modifyUser)
+                ac.modifyUserAction(modifyUser.user)
             );
 
-            expect(newState).toEqual(modifyUser);
+            expect(newState).toEqual(modifyUser.user);
         });
         test("If it not modify, then it shoul be not modify mockUser", () => {
-            const initialState: iLogin = mockUser;
+            const initialState: iUser = mockUser.user;
             const modifyUser = { ...mockUser, _id: "3" };
             const newState = userReducer(
                 initialState,
-                ac.modifyUserAction(modifyUser)
+                ac.modifyUserAction(modifyUser.user)
             );
 
-            expect(newState).toStrictEqual(mockUser);
+            expect(newState).toEqual(mockUser.user);
         });
     });
 
     describe("When caseDefault is called", () => {
         test("Then it shoul be same state", () => {
-            const state = userReducer(mockUser, {} as AnyAction);
+            const state = userReducer(mockUser.user, {} as AnyAction);
 
-            expect(state).toEqual(mockUser);
+            expect(state).toEqual(mockUser.user);
         });
     });
 });

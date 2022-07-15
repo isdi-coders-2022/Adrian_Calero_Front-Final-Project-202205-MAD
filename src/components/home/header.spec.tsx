@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import * as redux from "react-redux";
 import { iLogin } from "../../interfaces/interfaces";
-import { LocalStorage } from "../../services/localStorage";
 import { store } from "../../store/store";
 import { HeaderHome } from "./header";
 
@@ -11,6 +10,17 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("Given the component header", () => {
+    const mockloginWithAvatar: iLogin = {
+        token: "1",
+        user: {
+            avatar: "url",
+            userName: "test",
+            email: "test@test.com",
+            passwd: "1234",
+            favorites: [],
+        },
+    };
+
     const mocklogin: iLogin = {
         token: "1",
         user: {
@@ -21,29 +31,24 @@ describe("Given the component header", () => {
         },
     };
 
-    beforeEach(() => {
-        (redux.useSelector as jest.Mock).mockImplementation((callback) => {
-            return callback(mocklogin);
-        });
-
-        LocalStorage.prototype.getItem = jest
-            .fn()
-            .mockReturnValue({ user: { userName: "test" } });
-    });
+    beforeEach(() => {});
     describe("When i render the component", () => {
         test("Then it should be render", () => {
+            (redux.useSelector as jest.Mock).mockImplementation((callback) => {
+                return callback(mocklogin);
+            });
             render(
                 <redux.Provider store={store}>
                     <HeaderHome />
                 </redux.Provider>
             );
 
-            expect(screen.getByText(/your solution/i)).toBeInTheDocument();
+            expect(screen.getByText(/test/i)).toBeInTheDocument();
         });
         test("Then it should be render with avatar", () => {
-            LocalStorage.prototype.getItem = jest
-                .fn()
-                .mockReturnValue({ user: { avatar: "url", userName: "test" } });
+            (redux.useSelector as jest.Mock).mockImplementation((callback) => {
+                return callback(mockloginWithAvatar);
+            });
 
             render(
                 <redux.Provider store={store}>
