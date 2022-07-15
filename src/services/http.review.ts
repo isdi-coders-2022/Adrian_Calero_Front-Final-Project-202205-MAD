@@ -1,13 +1,14 @@
 import { iReview } from "../interfaces/interfaces";
 import { LocalStorage } from "./localStorage";
 
-const local = new LocalStorage();
-const totalUser = local.getItem();
-const token = totalUser.token;
 export class HttpReview {
     url: string;
+    local: LocalStorage;
+    login: any;
     constructor() {
         this.url = "http://localhost:3600/review";
+        this.local = new LocalStorage();
+        this.login = this.local.getItem();
     }
 
     getAllInProfesionals(id: string): Promise<iReview[]> {
@@ -16,7 +17,7 @@ export class HttpReview {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
+                Authorization: "Bearer " + this.login.token,
             },
         }).then((resp) => resp.json());
     }
