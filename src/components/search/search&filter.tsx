@@ -31,7 +31,12 @@ export function SearchAndFilter() {
                         onChange={handlerSearch}
                     />
                 </div>
-                <select value={type} onChange={handleChange} className="select">
+                <select
+                    data-testid="profesion"
+                    value={type}
+                    onChange={handleChange}
+                    className="select"
+                >
                     <option value="electrician">Electrician</option>
                     <option value="mechanic">Mechanic</option>
                     <option value="pompler">Pompler</option>
