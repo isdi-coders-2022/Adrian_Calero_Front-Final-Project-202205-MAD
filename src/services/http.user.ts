@@ -9,8 +9,8 @@ export class HttpUser {
         return fetch(this.url).then((resp) => resp.json());
     }
 
-    getUser(user: iUser): Promise<iUser> {
-        return fetch(this.url + `/${user._id}`).then((resp) => resp.json());
+    getUser(id: string): Promise<iUser> {
+        return fetch(this.url + `/${id}`).then((resp) => resp.json());
     }
 
     registerUser(user: iUser): Promise<iUser> {
