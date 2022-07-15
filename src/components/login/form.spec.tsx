@@ -24,7 +24,9 @@ const preloadedState = {
 
 describe("Given the component FormLogin", () => {
     beforeEach(() => {
-        HttpUser.prototype.loginUser = jest.fn().mockResolvedValue({});
+        HttpUser.prototype.loginUser = jest
+            .fn()
+            .mockResolvedValue({ token: "1", user: { userName: "test" } });
         LocalStorage.prototype.setItem = jest.fn().mockResolvedValue({});
     });
     describe("When i render the component", () => {
@@ -42,7 +44,29 @@ describe("Given the component FormLogin", () => {
     });
 
     describe("When i click the button Login", () => {
-        test("Then it should be called the dispatch", () => {
+        test("Then it should be called with token the dispatch", () => {
+            const mockUseDispatch = jest.spyOn(reactRedux, "useDispatch");
+            render(
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <FormLogin />
+                    </BrowserRouter>
+                </Provider>,
+                { preloadedState, store }
+            );
+
+            fireEvent.click(screen.getByText(/login/i));
+
+            expect(mockUseDispatch).toHaveBeenCalled();
+        });
+
+        test("Then it should be call the error", () => {
+            HttpUser.prototype.loginUser = jest
+                .fn()
+                .mockResolvedValue({
+                    token: undefined,
+                    user: { userName: "test" },
+                });
             const mockUseDispatch = jest.spyOn(reactRedux, "useDispatch");
             render(
                 <Provider store={store}>

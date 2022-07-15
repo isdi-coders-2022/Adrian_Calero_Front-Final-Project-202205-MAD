@@ -26,7 +26,7 @@ describe("Given the http.user", () => {
             global.fetch = jest.fn().mockResolvedValue({
                 json: jest.fn().mockResolvedValue(user),
             });
-            const result = await new HttpUser().getUser(user);
+            const result = await new HttpUser().getUser("1");
 
             expect(fetch).toBeCalled();
             expect(result.userName).toBe("test");
@@ -50,15 +50,12 @@ describe("Given the http.user", () => {
         test("Then should be render", async () => {
             const user = { userName: "test", passwd: "1234" };
             global.fetch = jest.fn().mockResolvedValue({
-                json: jest
-                    .fn()
-                    .mockResolvedValue({
-                        token: "",
-                        user: { userName: "test" },
-                    }),
+                json: jest.fn().mockResolvedValue({
+                    token: "",
+                    user: { userName: "test" },
+                }),
             });
             const result = await new HttpUser().loginUser(user);
-            console.log("RESULTADO", result);
 
             expect(fetch).toBeCalled();
             expect(result.user.userName).toBe("test");

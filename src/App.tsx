@@ -1,19 +1,29 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import { HttpProfesional } from "./services/http.profesional";
-import * as ac from "./redux/profesional-reducer/action.creator";
+import * as acProf from "./redux/profesional-reducer/action.creator";
+import * as acUser from "./redux/user-reducer/action.creator";
+import { HttpUser } from "./services/http.user";
+import { LocalStorage } from "./services/localStorage";
 
 function App() {
-    const api = new HttpProfesional();
+    const apiProf = new HttpProfesional();
+    const apiUser = new HttpUser();
     const dispatch = useDispatch();
+    const local = new LocalStorage().getItem();
 
     useEffect(() => {
-        api.getAllProfesional().then((resp) =>
-            dispatch(ac.loadProfesionalAction(resp))
-        );
-    }, [dispatch]);
+        if (local.token) {
+            apiUser
+                .getUser(local.id as string)
+                .then((resp) => dispatch(acUser.modifyUserAction(resp)));
+        }
+        apiProf
+            .getAllProfesional()
+            .then((resp) => dispatch(acProf.loadProfesionalAction(resp)));
+    }, []);
 
     const RegisterOrLoginPage = React.lazy(
         () => import("./pages/registerorlogin")

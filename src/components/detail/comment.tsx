@@ -32,18 +32,14 @@ export function Comment() {
                     <Rating name="media-score" value={sum / reviews.length} />
                 </h3>
                 <h3>Reviews</h3>
-                {!reviews ? (
-                    <></>
-                ) : (
-                    reviews.map((review) => (
-                        <li key={review._id}>
-                            <h4>{review.client.userName}</h4>
-                            <Rating name="score" value={review.reviews.score} />
-                            <p>{review.date}</p>
-                            <p>{review.reviews.comment}</p>
-                        </li>
-                    ))
-                )}
+                {reviews?.map((review) => (
+                    <li key={review._id}>
+                        <h4>{review.client.userName}</h4>
+                        <Rating name="score" value={review.reviews.score} />
+                        <p>{review.date}</p>
+                        <p>{review.reviews.comment}</p>
+                    </li>
+                ))}
             </ul>
         </div>
     );

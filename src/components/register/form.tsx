@@ -12,6 +12,7 @@ import { HttpUser } from "../../services/http.user";
 import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
+import Swal from "sweetalert2";
 
 const Input = styled("input")({
     display: "none",
@@ -40,9 +41,7 @@ export function Form() {
         uploadBytes(
             avatarRef,
             file as unknown as Blob | Uint8Array | ArrayBuffer
-        ).then((snapshot) => {
-            console.log("Uploaded a blob or file!");
-        });
+        );
         getDownloadURL(ref(storage, `/files/${file.name}`)).then(
             (url) => (formData.avatar = url)
         );
@@ -50,29 +49,36 @@ export function Form() {
 
     async function handleSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        try {
-            const newUser: User = {
-                ...new User(
-                    formData.avatar,
-                    formData.userName,
-                    formData.email,
-                    formData.passwd,
-                    []
-                ),
-            };
-            console.log(newUser);
 
-            api.registerUser(newUser).then((resp) => console.log(resp));
-            localStorage.getItem("login")
-                ? JSON.parse(localStorage.getItem("login") as string)
-                : localStorage.setItem("login", JSON.stringify(newUser));
+        const newUser: User = {
+            ...new User(
+                formData.avatar,
+                formData.userName,
+                formData.email,
+                formData.passwd,
+                []
+            ),
+        };
 
-            setFormData({ avatar: "", userName: "", email: "", passwd: "" });
+        api.registerUser(newUser).then((resp) =>
+            resp
+                ? Swal.fire({
+                      title: "User created correctly",
+                      text: "Loged for continue",
+                      icon: "success",
+                      confirmButtonText: "Next",
+                  })
+                : Swal.fire({
+                      title: "Error!",
+                      text: "Invalid params",
+                      icon: "error",
+                      confirmButtonText: "Try again",
+                  })
+        );
 
-            navigate("/login");
-        } catch (error) {
-            console.log(error);
-        }
+        setFormData({ avatar: "", userName: "", email: "", passwd: "" });
+
+        navigate("/login");
     }
 
     return (
