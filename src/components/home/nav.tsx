@@ -5,36 +5,28 @@ import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import FormatPaintIcon from "@mui/icons-material/FormatPaint";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { Link } from "react-router-dom";
-import { Divider } from "@mui/material";
 
 export function NavIcons() {
     return (
         <>
-            <Divider />
             <nav className="icon-nav">
                 <Link to={"/search/electrician"}>
-                    <ElectricBoltIcon />
-                    Electrician
+                    <ElectricBoltIcon fontSize="large" />
                 </Link>
                 <Link to={"/search/mechanic"}>
-                    <HomeRepairServiceIcon />
-                    Mechanic
+                    <HomeRepairServiceIcon fontSize="large" />
                 </Link>
                 <Link to={"/search/pompler"}>
-                    <WaterDamageIcon />
-                    Pompler
+                    <WaterDamageIcon fontSize="large" />
                 </Link>
                 <Link to={"/search/arquitect"}>
-                    <SquareFootIcon />
-                    Arquitect
+                    <SquareFootIcon fontSize="large" />
                 </Link>
                 <Link to={"/search/painter"}>
-                    <FormatPaintIcon />
-                    Painter
+                    <FormatPaintIcon fontSize="large" />
                 </Link>
                 <Link to={"/search/shipper"}>
-                    <LocalShippingIcon />
-                    Shipper
+                    <LocalShippingIcon fontSize="large" />
                 </Link>
             </nav>
         </>
