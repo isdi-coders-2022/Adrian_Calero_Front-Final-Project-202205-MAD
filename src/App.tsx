@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import { HttpProfesional } from "./services/http.profesional";
@@ -15,7 +15,7 @@ function App() {
     const local = new LocalStorage().getItem();
 
     useEffect(() => {
-        if (local.token) {
+        if (local) {
             apiUser
                 .getUser(local.id as string)
                 .then((resp) => dispatch(acUser.modifyUserAction(resp)));
