@@ -1,8 +1,8 @@
 import { Provider, useSelector } from "react-redux";
-import { BrowserRouter, useParams } from "react-router-dom";
+import { BrowserRouter, useNavigate, useParams } from "react-router-dom";
 import { iLogin, iProfesional } from "../../interfaces/interfaces";
 import { Review } from "../../models/review.model";
-import { render, screen } from "../../services/test.utils";
+import { fireEvent, render, screen } from "../../services/test.utils";
 import { store } from "../../store/store";
 import { CardDetail } from "./card";
 
@@ -17,9 +17,12 @@ jest.mock("react-redux", () => ({
     useSelector: jest.fn(),
 }));
 
+const mockedNavigator = jest.fn();
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
+    useNavigate: () => mockedNavigator,
 }));
 
 const mockProfesional = {
@@ -36,11 +39,9 @@ const mockProfesional = {
     },
 };
 
-const useSelectorMock = useSelector as jest.Mock;
-
 describe("Given the component CardDetail", () => {
     beforeEach(() => {
-        useSelectorMock.mockReturnValue([mockProfesional]);
+        (useSelector as jest.Mock).mockReturnValue([mockProfesional]);
     });
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {
@@ -57,6 +58,26 @@ describe("Given the component CardDetail", () => {
             );
 
             expect(screen.getByAltText(/jose/i)).toBeInTheDocument();
+        });
+    });
+
+    describe("When I click the button", () => {
+        test("Then it should be call navigate", () => {
+            (useParams as jest.Mock).mockReturnValue({
+                id: "62cef4271854336fe7fe777f",
+            });
+            render(
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <CardDetail />
+                    </BrowserRouter>
+                </Provider>,
+                { store, preloadedState }
+            );
+            const button = screen.getByRole("button");
+            fireEvent.click(button, { profesion: "arquitect" });
+
+            expect(mockedNavigator).toHaveBeenCalled();
         });
     });
 });

@@ -1,6 +1,6 @@
 export function BodyHome() {
     return (
-        <div className="body">
+        <div className="body-home">
             <h3>Fix your problems with solucions</h3>
             <p>
                 Your Solution is an app that connects clients with problems and

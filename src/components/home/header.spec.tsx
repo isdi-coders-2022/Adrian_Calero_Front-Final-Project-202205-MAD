@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import * as redux from "react-redux";
 import { iLogin } from "../../interfaces/interfaces";
+import { LocalStorage } from "../../services/localStorage";
 import { store } from "../../store/store";
 import { HeaderHome } from "./header";
 
@@ -8,7 +9,7 @@ jest.mock("react-redux", () => ({
     ...jest.requireActual("react-redux"),
     useSelector: jest.fn(),
 }));
-
+const login = { token: "1" };
 describe("Given the component header", () => {
     const mockloginWithAvatar: iLogin = {
         token: "1",
@@ -31,7 +32,9 @@ describe("Given the component header", () => {
         },
     };
 
-    beforeEach(() => {});
+    beforeEach(() => {
+        LocalStorage.prototype.getItem = jest.fn().mockResolvedValue(login);
+    });
     describe("When i render the component", () => {
         test("Then it should be render", () => {
             (redux.useSelector as jest.Mock).mockImplementation((callback) => {
