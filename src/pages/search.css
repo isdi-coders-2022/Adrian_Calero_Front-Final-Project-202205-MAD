@@ -1,71 +1,133 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
-li img{
-    width: 8rem;
-    clip-path: circle(30% at 50% 42%); 
+body,
+html {
+    background-color: #ADE8F4;
 }
 
-ul{
+header {
+    display: flex;
+    justify-content: end;
+    text-align: center;
+}
+
+.title h1 {
+    color: #03045E;
+    font-size: 3rem;
+}
+
+.welcome {
+    width: 14rem;
+    height: 7rem;
+    border: 1px solid #023E8A;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    margin-left: 1rem;
+}
+
+.welcome img {
+    margin-top: 2rem;
+}
+
+.welcome h4 {
+    font-size: x-large;
+}
+
+.welcome div {
+    background-color: #0096C7;
+}
+
+.navigation {
+    background-color: #023E8A;
+
+
+}
+
+li img {
+    width: 8rem;
+    border-radius: 2rem;
+    margin: 1rem 0;
+}
+
+ul {
     display: flex;
     flex-direction: column;
-    
+
 }
 
-ul a{
-    margin: 1rem 1rem;
+ul a {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
-    color: black;
+    color: aliceblue;
+    background-color: #023E8A;
 }
 
-.card-profesional{
-    width: 100%;
+.card-profesional {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     border: 1px solid black;
     border-radius: 2rem;
-    margin: 0;
+    margin: 1rem;
+    background-color: #90E0EF;
 
 }
 
-.search-filter{
+.search-filter {
     display: flex;
     flex-direction: column;
 }
 
-.search-filter .select{
+.search-filter .select {
     width: 5rem;
     height: 3rem;
     font-family: 'Fira Sans', sans-serif;
 
 }
 
-.container-search{
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
+.container-search {
+    width: 100%;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+
 }
 
-.searcher{
+.searcher {
     display: flex;
     align-items: center;
     border: 1px solid black;
     border-radius: 3rem;
-    width: 20rem;
+    width: 18rem;
     height: 3rem;
+    background-color: aliceblue;
+    color: #023E8A;
+
 }
 
-.searcher input{
+.searcher input {
     border: none;
     width: 85%;
     height: 100%;
     font-size: larger;
+    background-color: aliceblue;
+
 }
 
-select{
+select {
     height: 3rem;
     width: 5rem;
     border-radius: 1rem;
+    background-color: #023E8A;
+    color: aliceblue;
 }
