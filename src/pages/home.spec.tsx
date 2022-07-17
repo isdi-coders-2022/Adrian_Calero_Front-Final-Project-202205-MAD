@@ -22,7 +22,9 @@ describe("Given the component Home", () => {
                 </Provider>
             );
 
-            expect(screen.getByText(/Mechanic/)).toBeInTheDocument();
+            expect(
+                screen.getByText(/Fix your problems with solucions/i)
+            ).toBeInTheDocument();
         });
     });
 });

@@ -15,7 +15,7 @@ describe("Given the component NavIcons", () => {
                 </Provider>
             );
 
-            expect(screen.getByText(/Electrician/i)).toBeInTheDocument();
+            expect(screen.getAllByRole("link")).toHaveLength(6);
         });
     });
 });

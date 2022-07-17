@@ -2,7 +2,6 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, useParams } from "react-router-dom";
 import { iLogin, iProfesional } from "../../interfaces/interfaces";
 import { Review } from "../../models/review.model";
-import { HttpReview } from "../../services/http.review";
 import { LocalStorage } from "../../services/localStorage";
 import { render, screen } from "../../services/test.utils";
 import { store } from "../../store/store";
@@ -21,7 +20,7 @@ jest.mock("react-redux", () => ({
     useSelector: jest.fn(),
     useDispatch: jest.fn(),
 }));
-// jest.mock("../../services/http.review");
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -48,9 +47,6 @@ describe("Given the component ListProfesional", () => {
             id: "62c41172eb20556e8d48e754",
         });
         LocalStorage.prototype.getItem = jest.fn().mockResolvedValue(login);
-        // HttpReview.prototype.getAllInProfesionals = jest
-        //     .fn()
-        //     .mockReturnValue([mockReview]);
     });
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {
