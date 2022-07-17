@@ -21,8 +21,8 @@ export interface iUser {
 
 export interface iReview {
     _id?: string;
-    worker: iProfesional;
-    client: iUser;
+    worker: Partial<iProfesional>;
+    client: Partial<iUser>;
     date: string;
     reviews: {
         img: string[];
