@@ -26,7 +26,11 @@ export class HttpReview {
         return fetch(this.url, {
             method: "POST",
             body: JSON.stringify(review),
-            headers: { "Content-type": "application/json" },
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+                Authorization: "Bearer " + this.login.token,
+            },
         }).then((resp) => resp.json());
     }
 
