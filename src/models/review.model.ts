@@ -2,8 +2,8 @@ import { iProfesional, iReview, iUser } from "../interfaces/interfaces";
 
 export class Review implements iReview {
     constructor(
-        public worker: iProfesional,
-        public client: iUser,
+        public worker: Partial<iProfesional>,
+        public client: Partial<iUser>,
         public date: string,
         public reviews: {
             img: Array<string>;
