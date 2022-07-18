@@ -32,6 +32,7 @@ function App() {
     const LoginPage = React.lazy(() => import("./pages/login"));
     const SearchPage = React.lazy(() => import("./pages/search"));
     const DetailPage = React.lazy(() => import("./pages/detail"));
+    const SettingPage = React.lazy(() => import("./pages/setting"));
 
     const options = [
         { path: "", label: "Home", page: <Home></Home> },
@@ -56,6 +57,11 @@ function App() {
             path: "/detail/:id",
             label: "Detail",
             page: <DetailPage></DetailPage>,
+        },
+        {
+            path: "/setting",
+            label: "Setting",
+            page: <SettingPage></SettingPage>,
         },
     ];
     return (
