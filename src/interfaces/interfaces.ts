@@ -36,3 +36,9 @@ export interface iLogin {
     user: iUser;
     token: string;
 }
+
+export interface iList {
+    accum: number;
+    total: number;
+    prof: iProfesional;
+}
