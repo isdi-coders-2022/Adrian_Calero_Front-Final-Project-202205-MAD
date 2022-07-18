@@ -43,8 +43,13 @@ export class HttpReview {
     }
 
     deleteReview(review: iReview): Promise<number> {
-        return fetch(this.url + `/${review._id}`, { method: "DELETE" }).then(
-            (resp) => resp.json()
-        );
+        return fetch(this.url + `/${review._id}`, {
+            method: "DELETE",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + this.login.token,
+            },
+        }).then((resp) => resp.json());
     }
 }
