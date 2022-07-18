@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { iProfesional } from "../../interfaces/interfaces";
+import { iList, iProfesional } from "../../interfaces/interfaces";
 import { iStore } from "../../store/store";
 import { Link } from "react-router-dom";
 import { HttpReview } from "../../services/http.review";
@@ -9,9 +9,11 @@ import { Rating } from "@mui/material";
 export function ListProfesional({
     type,
     search,
+    order,
 }: {
     type: string | undefined;
     search: string | undefined;
+    order: string | undefined;
 }) {
     const initialState = <></>;
     const api = new HttpReview();
@@ -26,7 +28,7 @@ export function ListProfesional({
                 profesional.profesion === type &&
                 profesional.name.toLowerCase().includes(search as string)
         );
-    }, [type, search]);
+    }, [type, search, profesionals, order]);
 
     let arrayProf:
         | Promise<{
@@ -50,10 +52,27 @@ export function ListProfesional({
                 });
         });
     }
+    let listProf: Promise<[] | iList[]>;
+    switch (order) {
+        case "price+":
+            listProf = Promise.all(arrayProf as unknown as iList[]).then(
+                (array) =>
+                    array.sort(function (a, b) {
+                        return b.prof.info.price - a.prof.info.price;
+                    })
+            );
+
+            break;
+
+        default:
+            listProf = Promise.all(arrayProf as unknown as iList[]);
+            break;
+    }
+    // Promise.all(arrayProf as []).then((array) => array);
 
     useEffect(() => {
         if (arrayProf) {
-            Promise.all(arrayProf).then((array) => {
+            listProf.then((array) => {
                 setRender(
                     <ul>
                         {array.map((profesional) => (
