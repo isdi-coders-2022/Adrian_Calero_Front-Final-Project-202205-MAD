@@ -1,0 +1,60 @@
+.header-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+form {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: larger;
+}
+
+form input {
+    width: 14rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 3px;
+    padding: 0 1rem;
+}
+
+form button {
+    width: 7rem;
+    height: 4rem;
+    background-color: #023E8A;
+    color: aliceblue;
+    border: none;
+    border-radius: 1rem;
+}
+
+.back {
+    background: none;
+    border: none;
+    color: #023E8A;
+    margin-left: 3rem;
+}
+
+form .delete {
+    background-color: rgb(204, 53, 53);
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.avatar {
+    display: none;
+}

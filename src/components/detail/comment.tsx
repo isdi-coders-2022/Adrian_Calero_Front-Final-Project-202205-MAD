@@ -31,14 +31,14 @@ export function Comment() {
         api.getAllInProfesionals(id as string).then((resp) =>
             dispatch(ac.loadReviewAction(resp))
         );
-    }, [dispatch]);
+    }, [dispatch, id, api]);
 
     const sum = reviews.reduce((accumulator, object) => {
         return accumulator + object.reviews.score;
     }, 0);
 
-    function handleDialog() {
-        setOpen(true);
+    function handleDialog(open: boolean) {
+        setOpen(!open);
     }
 
     function handleComment(ev: SyntheticEvent) {
@@ -63,6 +63,17 @@ export function Comment() {
         api.addReview(newReview).then((review) =>
             dispatch(ac.createReviewAction(review))
         );
+
+        formData.comment = "";
+        formData.score = 0;
+        formData.img = [];
+        formData.video = [];
+    }
+
+    function handleDelete(review: iReview) {
+        api.deleteReview(review).then((resp) =>
+            dispatch(ac.deleteReviewAction(review))
+        );
     }
 
     function handleChange(ev: SyntheticEvent) {
@@ -80,17 +91,37 @@ export function Comment() {
                 <h3>Reviews</h3>
                 {reviews?.map((review) => (
                     <li key={review._id}>
-                        <h4>{review.client.userName}</h4>
-                        <Rating name="rating" value={review.reviews.score} />
-                        <p>{review.date}</p>
-                        <p>{review.reviews.comment}</p>
+                        <div>
+                            <h4>{review.client?.userName}</h4>
+                            <Rating
+                                name="rating"
+                                value={review.reviews?.score}
+                            />
+                            <p>{review?.date}</p>
+                            <p>{review.reviews?.comment}</p>
+                        </div>
+
+                        {review.client?._id === local.id && (
+                            <button
+                                onClick={() => handleDelete(review)}
+                                className="cross"
+                            >
+                                X
+                            </button>
+                        )}
                     </li>
                 ))}
-                <button onClick={handleDialog} className="comment-button">
+                <button
+                    onClick={() => handleDialog(open)}
+                    className="comment-button"
+                >
                     Comment
                 </button>
             </ul>
             <dialog open={open}>
+                <button onClick={() => handleDialog(open)} className="cross">
+                    X
+                </button>
                 <form method="dialog" onSubmit={handleComment}>
                     <Rating
                         name="score"

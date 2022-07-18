@@ -26,8 +26,16 @@ header {
     font-size: 3rem;
 }
 
+.title-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .welcome img {
     margin-top: 2rem;
+    width: 8rem;
+    clip-path: circle(30% at 50% 42%);
 }
 
 .welcome h4 {
@@ -40,13 +48,6 @@ header {
 
 .navigation {
     background-color: #023E8A;
-}
-
-
-
-header img {
-    width: 6rem;
-    clip-path: circle(30% at 50% 42%);
 }
 
 

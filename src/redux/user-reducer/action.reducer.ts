@@ -15,6 +15,9 @@ export const userReducer = createReducer(initialState, (builder) => {
         .addCase(ac.loginUserAction, (state, action) => ({
             ...action.payload.user,
         }))
-        .addCase(ac.modifyUserAction, (state, action) => action.payload)
+        .addCase(ac.modifyUserAction, (state, action) => ({
+            ...state,
+            ...action.payload,
+        }))
         .addDefaultCase((state) => state);
 });
