@@ -7,6 +7,7 @@ export function SearchAndFilter() {
     const { profesion } = useParams();
     const [type, setType] = useState(profesion);
     const [search, setSearch] = useState("");
+    const [order, setOrder] = useState("");
 
     function handleChange(ev: SyntheticEvent) {
         const element = ev.target as HTMLFormElement;
@@ -16,6 +17,11 @@ export function SearchAndFilter() {
     function handlerSearch(ev: SyntheticEvent) {
         const eventTarget = ev.target as HTMLFormElement;
         setSearch(eventTarget.value);
+    }
+
+    function handleOrder(ev: SyntheticEvent) {
+        const eventTarget = ev.target as HTMLFormElement;
+        setOrder(eventTarget.value);
     }
 
     return (
@@ -31,6 +37,20 @@ export function SearchAndFilter() {
                         onChange={handlerSearch}
                     />
                 </div>
+                <select
+                    data-testid="order"
+                    value={order}
+                    onChange={handleOrder}
+                    className="select"
+                >
+                    <option value="">Order by:</option>
+                    <option value="price+">$/h +</option>
+                    <option value="price-">$/h -</option>
+                    <option value="votes+">Votes +</option>
+                    <option value="votes-">Votes -</option>
+                    <option value="rating+">Media Rating +</option>
+                    <option value="rating-">Media Rating -</option>
+                </select>
                 <select
                     data-testid="profesion"
                     value={type}
@@ -48,7 +68,7 @@ export function SearchAndFilter() {
 
             <div></div>
 
-            <ListProfesional type={type} search={search} />
+            <ListProfesional type={type} search={search} order={order} />
         </>
     );
 }
