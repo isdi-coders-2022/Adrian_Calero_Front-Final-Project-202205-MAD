@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 
 export function HeaderRegister() {
     return (
-        <header className="authorization">
+        <header className="header-auth">
             <Typography variant="h6">FIX</Typography>
             <Typography variant="h2">YOUR</Typography>
             <Typography variant="h6">PROBLEM WITH</Typography>
