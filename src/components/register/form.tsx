@@ -47,7 +47,7 @@ export function Form() {
         );
     }
 
-    async function handleSubmit(ev: SyntheticEvent) {
+    function handleSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
 
         const newUser: User = {
