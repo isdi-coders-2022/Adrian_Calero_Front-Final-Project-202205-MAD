@@ -31,7 +31,7 @@ export function Comment() {
         api.getAllInProfesionals(id as string).then((resp) =>
             dispatch(ac.loadReviewAction(resp))
         );
-    }, [dispatch, id, api]);
+    }, [reviews, id]);
 
     const sum = reviews.reduce((accumulator, object) => {
         return accumulator + object.reviews.score;
@@ -49,7 +49,9 @@ export function Comment() {
             ...new Review(
                 id as Partial<iProfesional>,
                 local.id,
-                `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+                `${date.getDate()}/${
+                    date.getMonth() + 1
+                }/${date.getFullYear()}`,
                 {
                     ...formData,
                     img: formData.img,
