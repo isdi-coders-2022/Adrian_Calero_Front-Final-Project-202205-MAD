@@ -19,7 +19,7 @@ export function FooterHome() {
                 <Link to="/home">
                     <HomeIcon style={{ color: "aliceblue" }} />
                 </Link>
-                <Link to="/setting">
+                <Link to={login ? "/setting" : "/home"}>
                     <SettingsIcon style={{ color: "aliceblue" }} />
                 </Link>
                 {login ? (
