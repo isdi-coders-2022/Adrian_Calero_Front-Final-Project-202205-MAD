@@ -1,23 +1,22 @@
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, useParams } from "react-router-dom";
-import { iLogin, iProfesional } from "../../interfaces/interfaces";
-import { Review } from "../../models/review.model";
+import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
+import { reviewReducer } from "../../redux/review-reducer/action.reducer";
+import { userReducer } from "../../redux/user-reducer/action.reducer";
 import { LocalStorage } from "../../services/localStorage";
 import { render, screen } from "../../services/test.utils";
-import { store } from "../../store/store";
 import { Comment } from "./comment";
 
-const preloadedState = {
-    user: {} as iLogin,
-    profesional: [] as Array<iProfesional>,
-    review: [] as Array<Review>,
+const reducer = {
+    profesional: profesionalReducer,
+    review: reviewReducer,
+    user: userReducer,
 };
 
 jest.mock("../../services/localStorage");
 
 jest.mock("react-redux", () => ({
     ...jest.requireActual("react-redux"),
-    useSelector: jest.fn(),
     useDispatch: jest.fn(),
 }));
 
@@ -35,13 +34,17 @@ const mockReview = {
         score: 5,
     },
 };
+const preloadedState = {
+    user: {},
+    profesional: [],
+    review: [mockReview, mockReview],
+};
 const login = { token: "1" };
-const useSelectorMock = useSelector as jest.Mock;
+
 const useDispatchMock = useDispatch as jest.Mock;
 
-describe("Given the component ListProfesional", () => {
+describe("Given the component Comment", () => {
     beforeEach(() => {
-        useSelectorMock.mockReturnValue([mockReview]);
         useDispatchMock.mockReturnValue({});
         (useParams as jest.Mock).mockReturnValue({
             id: "62c41172eb20556e8d48e754",
@@ -51,12 +54,10 @@ describe("Given the component ListProfesional", () => {
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {
             render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <Comment />
-                    </BrowserRouter>
-                </Provider>,
-                { preloadedState, store }
+                <BrowserRouter>
+                    <Comment />
+                </BrowserRouter>,
+                { preloadedState, reducer }
             );
 
             expect(screen.getByText(/reviews/i)).toBeInTheDocument();

@@ -1,21 +1,12 @@
-import { Provider, useSelector } from "react-redux";
 import { BrowserRouter, useNavigate, useParams } from "react-router-dom";
-import { iLogin, iProfesional } from "../../interfaces/interfaces";
-import { Review } from "../../models/review.model";
+
+import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
 import { fireEvent, render, screen } from "../../services/test.utils";
-import { store } from "../../store/store";
 import { CardDetail } from "./card";
 
-const preloadedState = {
-    user: {} as iLogin,
-    profesional: [] as Array<iProfesional>,
-    review: [] as Array<Review>,
+const reducer = {
+    profesional: profesionalReducer,
 };
-
-jest.mock("react-redux", () => ({
-    ...jest.requireActual("react-redux"),
-    useSelector: jest.fn(),
-}));
 
 const mockedNavigator = jest.fn();
 
@@ -38,23 +29,22 @@ const mockProfesional = {
         video: "https://firebasestorage.googleapis.com/v0/b/proyect-files.appspot.com/...",
     },
 };
-
+const preloadedState = {
+    profesional: [mockProfesional],
+};
 describe("Given the component CardDetail", () => {
-    beforeEach(() => {
-        (useSelector as jest.Mock).mockReturnValue([mockProfesional]);
-    });
+    beforeEach(() => {});
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {
             (useParams as jest.Mock).mockReturnValue({
                 id: "62cef4271854336fe7fe777f",
             });
             render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <CardDetail />
-                    </BrowserRouter>
-                </Provider>,
-                { store, preloadedState }
+                <BrowserRouter>
+                    <CardDetail />
+                </BrowserRouter>,
+
+                { preloadedState, reducer }
             );
 
             expect(screen.getByAltText(/jose/i)).toBeInTheDocument();
@@ -67,12 +57,10 @@ describe("Given the component CardDetail", () => {
                 id: "62cef4271854336fe7fe777f",
             });
             render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <CardDetail />
-                    </BrowserRouter>
-                </Provider>,
-                { store, preloadedState }
+                <BrowserRouter>
+                    <CardDetail />
+                </BrowserRouter>,
+                { preloadedState, reducer }
             );
             const button = screen.getByRole("button");
             fireEvent.click(button, { profesion: "arquitect" });
