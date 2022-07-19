@@ -22,24 +22,8 @@ export function ListProfesional({
         (state: iStore) => state.profesional as iProfesional[]
     );
 
-    const arrayProfFiltered = useMemo(() => {
-        return profesionals.filter(
-            (profesional) =>
-                profesional.profesion === type &&
-                profesional.name.toLowerCase().includes(search as string)
-        );
-    }, [type, search, profesionals, order]);
-
-    let arrayProf:
-        | Promise<{
-              accum: number;
-              total: number;
-              prof: iProfesional;
-          }>[]
-        | null = null;
-
-    if (arrayProfFiltered.length !== 0) {
-        arrayProf = arrayProfFiltered.map(async (prof) => {
+    const arrayProfWithRev = useMemo(() => {
+        const objects = profesionals.map(async (prof) => {
             return await api
                 .getAllInProfesionals(prof._id as string)
                 .then((resp) => {
@@ -51,11 +35,14 @@ export function ListProfesional({
                     return { accum, total, prof };
                 });
         });
-    }
+
+        return objects;
+    }, [profesionals]);
+
     let listProf: Promise<[] | iList[]>;
     switch (order) {
         case "price+":
-            listProf = Promise.all(arrayProf as unknown as iList[]).then(
+            listProf = Promise.all(arrayProfWithRev as unknown as iList[]).then(
                 (array) =>
                     array.sort(function (a, b) {
                         return b.prof.info.price - a.prof.info.price;
@@ -63,51 +50,69 @@ export function ListProfesional({
             );
 
             break;
+        case "price-":
+            listProf = Promise.all(arrayProfWithRev as unknown as iList[]).then(
+                (array) =>
+                    array.sort(function (a, b) {
+                        return a.prof.info.price - b.prof.info.price;
+                    })
+            );
+            break;
 
+        case "votes+":
         default:
-            listProf = Promise.all(arrayProf as unknown as iList[]);
+            listProf = Promise.all(arrayProfWithRev as unknown as iList[]);
             break;
     }
-    // Promise.all(arrayProf as []).then((array) => array);
 
     useEffect(() => {
-        if (arrayProf) {
+        if (listProf) {
             listProf.then((array) => {
                 setRender(
                     <ul>
-                        {array.map((profesional) => (
-                            <li
-                                className="card-profesional"
-                                key={profesional.prof.name}
-                            >
-                                <img
-                                    src={profesional.prof.avatar}
-                                    alt={profesional.prof.name}
-                                />
-                                <div>
-                                    <p>{profesional.prof.name}</p>
-                                    <Rating
-                                        name="media-score"
-                                        value={
-                                            profesional.accum /
-                                            profesional.total
-                                        }
+                        {array
+                            .filter(
+                                (obj) =>
+                                    obj.prof.profesion === type &&
+                                    obj.prof.name
+                                        .toLowerCase()
+                                        .includes(search as string)
+                            )
+                            .map((profesional) => (
+                                <li
+                                    className="card-profesional"
+                                    key={profesional.prof.name}
+                                >
+                                    <img
+                                        src={profesional.prof.avatar}
+                                        alt={profesional.prof.name}
                                     />
-                                    <p>{profesional.prof.info.price} $/h</p>
-                                </div>
-                                <p>{profesional.total} Votes</p>
-                                <Link to={`/detail/${profesional.prof._id}`}>
-                                    i
-                                </Link>
-                            </li>
-                        ))}
+                                    <div>
+                                        <p>{profesional.prof.name}</p>
+                                        <Rating
+                                            name="media-score"
+                                            value={
+                                                profesional.accum /
+                                                profesional.total
+                                            }
+                                        />
+                                        <p>{profesional.prof.info.price} $/h</p>
+                                    </div>
+                                    <p>{profesional.total} Votes</p>
+                                    <Link
+                                        to={`/detail/${profesional.prof._id}`}
+                                    >
+                                        i
+                                    </Link>
+                                </li>
+                            ))}
                     </ul>
                 );
             });
         } else {
             setRender(initialState);
         }
-    }, [arrayProfFiltered]);
+    }, [arrayProfWithRev, search, type, order]);
 
     return render;
 }
