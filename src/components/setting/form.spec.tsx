@@ -136,7 +136,7 @@ describe("Given the component FormUpdate", () => {
     });
 
     describe("When i click the button delete", () => {
-        test("Then it should be call a function", async () => {
+        test("Then it should be call a function", () => {
             (useNavigate as jest.Mock).mockReturnValue(navigate);
 
             render(

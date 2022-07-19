@@ -88,7 +88,11 @@ export function Form() {
 
     return (
         <>
-            <button onClick={handleBack} className="back">
+            <button
+                onClick={handleBack}
+                className="back"
+                data-testid="back-register"
+            >
                 <ArrowBackIosIcon fontSize="large" />
             </button>
             <form onSubmit={handleSubmit} className="register">
