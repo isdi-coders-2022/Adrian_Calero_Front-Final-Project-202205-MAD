@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { LocalStorage } from "../../services/localStorage";
+import CheckIcon from "@mui/icons-material/Check";
 
 export function FormUpdate() {
     const user = useSelector((state: iStore) => state.user as iUser);
@@ -36,19 +37,24 @@ export function FormUpdate() {
         const element = ev.target as HTMLFormElement;
         setFormData({ ...formData, [element.name]: element.value });
     }
-
+    const [charged, setCharged] = useState(false);
     async function handleUpload(ev: SyntheticEvent) {
         const element = ev.target as HTMLInputElement;
         const file = (element.files as FileList)[0];
         const avatarRef = ref(storage, `/files/${file.name}`);
 
-        await uploadBytes(
+        const feedback = await uploadBytes(
             avatarRef,
             file as unknown as Blob | Uint8Array | ArrayBuffer
         );
         await getDownloadURL(ref(storage, `/files/${file.name}`)).then(
             (url: string) => (formData.avatar = url)
         );
+        console.log(feedback);
+
+        if (feedback) {
+            setCharged(true);
+        }
     }
 
     function handleSubmit(ev: SyntheticEvent) {
@@ -73,12 +79,16 @@ export function FormUpdate() {
 
     return (
         <>
-            <button onClick={handleBack} className="back">
+            <button
+                onClick={handleBack}
+                className="back"
+                data-testid="back-button"
+            >
                 <ArrowBackIosIcon fontSize="large" />
             </button>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Change your Avata:
+                    Change your Avatar:
                     <input
                         className="avatar"
                         type="file"
@@ -88,6 +98,12 @@ export function FormUpdate() {
                     <AccountCircleIcon
                         sx={{ fontSize: 70, color: "#023E8A" }}
                     />
+                    {charged && (
+                        <CheckIcon
+                            data-testid="check"
+                            sx={{ fontSize: 50, color: "#023E8A" }}
+                        />
+                    )}
                 </label>
                 <label>
                     Change your Username:
