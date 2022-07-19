@@ -7,6 +7,7 @@ import { iLogin } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import { LocalStorage } from "../../services/localStorage";
 import Swal from "sweetalert2";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 export function FormLogin() {
     let navigate = useNavigate();
@@ -21,6 +22,9 @@ export function FormLogin() {
     function handleChange(ev: SyntheticEvent) {
         const element = ev.target as HTMLFormElement;
         setFormData({ ...formData, [element.name]: element.value });
+    }
+    function handleBack() {
+        navigate(`/registerorlogin`);
     }
 
     function handleSubmit(ev: SyntheticEvent) {
@@ -52,7 +56,10 @@ export function FormLogin() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <button onClick={handleBack} className="back">
+                <ArrowBackIosIcon fontSize="large" />
+            </button>
+            <form onSubmit={handleSubmit} className="login">
                 <TextField
                     className="inputText"
                     label="Username"
