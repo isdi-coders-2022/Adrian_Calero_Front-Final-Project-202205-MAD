@@ -1,6 +1,6 @@
-import { iUser } from "../interfaces/interfaces";
 import { User } from "../models/user.model";
 import { HttpUser } from "./http.user";
+import { LocalStorage } from "./localStorage";
 
 describe("Given the http.user", () => {
     describe("When i use the method getAllUsers", () => {
@@ -64,6 +64,9 @@ describe("Given the http.user", () => {
 
     describe("When i use the method updateUser", () => {
         test("Then should be render", async () => {
+            LocalStorage.prototype.getItem = jest
+                .fn()
+                .mockResolvedValue({ token: "1", id: "2" });
             const user = new User("url", "test", "test@test.com", "1234", []);
             const modifyUser = { ...user, userName: "pepe" };
             global.fetch = jest.fn().mockResolvedValue({
@@ -78,6 +81,9 @@ describe("Given the http.user", () => {
 
     describe("When i use the method deleteUser", () => {
         test("Then should be render", async () => {
+            LocalStorage.prototype.getItem = jest
+                .fn()
+                .mockResolvedValue({ token: "1", id: "2" });
             const user = new User("url", "test", "test@test.com", "1234", []);
 
             global.fetch = jest.fn().mockResolvedValue({
