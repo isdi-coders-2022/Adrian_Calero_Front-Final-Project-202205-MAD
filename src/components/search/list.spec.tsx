@@ -74,7 +74,11 @@ describe("Given the component ListProfesional", () => {
             render(
                 <Provider store={store}>
                     <BrowserRouter>
-                        <ListProfesional type={"arquitect"} search={"j"} />
+                        <ListProfesional
+                            type={"arquitect"}
+                            search={"j"}
+                            order={"price+"}
+                        />
                     </BrowserRouter>
                 </Provider>,
                 { preloadedState, store }
