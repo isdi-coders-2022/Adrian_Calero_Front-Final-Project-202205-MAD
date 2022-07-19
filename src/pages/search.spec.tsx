@@ -4,7 +4,7 @@ import { reviewReducer } from "../redux/review-reducer/action.reducer";
 import { userReducer } from "../redux/user-reducer/action.reducer";
 import { LocalStorage } from "../services/localStorage";
 import { render, screen } from "../services/test.utils";
-import Detail from "./detail";
+import Search from "./search";
 
 jest.mock("../services/localStorage");
 
@@ -59,12 +59,12 @@ describe("Given the page detail", () => {
         test("Then it shoul be rendered", () => {
             render(
                 <BrowserRouter>
-                    <Detail />
+                    <Search />
                 </BrowserRouter>,
                 { preloadedState, reducer }
             );
 
-            expect(screen.getByText(/reviews/i)).toBeInTheDocument();
+            expect(screen.getAllByRole("textbox")).toHaveLength(1);
         });
     });
 });

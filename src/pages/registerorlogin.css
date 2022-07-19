@@ -23,3 +23,13 @@ body {
     align-items: center;
     justify-content: space-around;
 }
+
+.buttons-container a {
+    text-decoration: none;
+}
+
+.buttons-container button {
+    width: 12rem;
+    height: 4rem;
+
+}

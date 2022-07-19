@@ -1,17 +1,15 @@
-import { Provider, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { iLogin, iProfesional } from "../../interfaces/interfaces";
-import { Review } from "../../models/review.model";
+import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
+import { reviewReducer } from "../../redux/review-reducer/action.reducer";
 import { HttpReview } from "../../services/http.review";
 import { LocalStorage } from "../../services/localStorage";
 import { render, screen } from "../../services/test.utils";
-import { store } from "../../store/store";
 import { ListProfesional } from "./list";
 
-jest.mock("react-redux", () => ({
-    ...jest.requireActual("react-redux"),
-    useSelector: jest.fn(),
-}));
+const reducer = {
+    profesional: profesionalReducer,
+    review: reviewReducer,
+};
 
 const mockProfesional = {
     _id: "62cef4271854336fe7fe777f",
@@ -27,16 +25,13 @@ const mockProfesional = {
     },
 };
 const preloadedState = {
-    user: {} as iLogin,
-    profesional: [] as Array<iProfesional>,
-    review: [] as Array<Review>,
+    profesional: [mockProfesional],
+    review: [],
 };
 
-const useSelectorMock = useSelector as jest.Mock;
-const login = { token: "1" };
+const login = { token: "1", id: "2" };
 describe("Given the component ListProfesional", () => {
     beforeEach(() => {
-        useSelectorMock.mockReturnValue([mockProfesional]);
         LocalStorage.prototype.getItem = jest.fn().mockResolvedValue(login);
         HttpReview.prototype.getAllInProfesionals = jest
             .fn()
@@ -72,12 +67,101 @@ describe("Given the component ListProfesional", () => {
     describe("When I render the component", () => {
         test("Then it should be rendered", async () => {
             render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <ListProfesional type={"arquitect"} search={"j"} />
-                    </BrowserRouter>
-                </Provider>,
-                { preloadedState, store }
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"price+"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+    });
+
+    describe("When I order all options", () => {
+        test("By price-", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"price-"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+        test("By votes+", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"votes+"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+        test("By votes-", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"votes-"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+        test("By rating+", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"rating+"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+        test("By rating-", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={"rating-"}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+
+            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+        });
+        test("By default case", async () => {
+            render(
+                <BrowserRouter>
+                    <ListProfesional
+                        type={"arquitect"}
+                        search={"j"}
+                        order={""}
+                    />
+                </BrowserRouter>,
+                { preloadedState, reducer }
             );
 
             expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();

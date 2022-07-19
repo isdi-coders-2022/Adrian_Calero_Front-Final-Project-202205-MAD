@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import { HttpProfesional } from "./services/http.profesional";
 import * as acProf from "./redux/profesional-reducer/action.creator";
@@ -74,6 +74,7 @@ function App() {
                         element={item.page}
                     ></Route>
                 ))}
+                <Route path="*" element={<Navigate replace to="" />}></Route>
             </Routes>
         </React.Suspense>
     );
