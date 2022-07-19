@@ -131,3 +131,10 @@ select {
     background-color: #023E8A;
     color: aliceblue;
 }
+
+.lock {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
