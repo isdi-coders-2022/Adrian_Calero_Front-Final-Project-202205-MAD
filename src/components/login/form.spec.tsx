@@ -1,17 +1,19 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import { HttpUser } from "../../services/http.user";
 import { LocalStorage } from "../../services/localStorage";
 import { fireEvent, render, screen } from "../../services/test.utils";
 import { FormLogin } from "./form";
-import * as reactRedux from "react-redux";
 import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
 import { reviewReducer } from "../../redux/review-reducer/action.reducer";
 import { userReducer } from "../../redux/user-reducer/action.reducer";
+import sweetalert2 from "sweetalert2";
 
-jest.mock("react-redux", () => ({
-    ...jest.requireActual("react-redux"),
+const navigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
     useNavigate: jest.fn(),
 }));
+jest.mock("sweetalert2");
 
 const reducer = {
     profesional: profesionalReducer,
@@ -46,10 +48,10 @@ describe("Given the component FormLogin", () => {
             expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
         });
     });
-
     describe("When i click the button Login", () => {
         test("Then it should be called with token the dispatch", () => {
-            const mockUseDispatch = jest.spyOn(reactRedux, "useDispatch");
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
+
             render(
                 <BrowserRouter>
                     <FormLogin />
@@ -59,15 +61,16 @@ describe("Given the component FormLogin", () => {
 
             fireEvent.click(screen.getByText(/login/i));
 
-            expect(mockUseDispatch).toHaveBeenCalled();
+            expect(HttpUser).toHaveBeenCalled();
         });
 
         test("Then it should be call the error", () => {
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
             HttpUser.prototype.loginUser = jest.fn().mockResolvedValue({
                 token: undefined,
                 user: { userName: "test" },
             });
-            const mockUseDispatch = jest.spyOn(reactRedux, "useDispatch");
+            sweetalert2.fire = jest.fn();
             render(
                 <BrowserRouter>
                     <FormLogin />
@@ -76,8 +79,7 @@ describe("Given the component FormLogin", () => {
             );
 
             fireEvent.click(screen.getByText(/login/i));
-
-            expect(mockUseDispatch).toHaveBeenCalled();
+            expect(screen.getAllByRole("textbox")).toHaveLength(1);
         });
     });
 
@@ -93,6 +95,22 @@ describe("Given the component FormLogin", () => {
             fireEvent.change(input, { target: { value: "name" } });
 
             expect(input).toHaveValue("name");
+        });
+    });
+
+    describe("When i click the button back", () => {
+        test("Then it should call navigate", () => {
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
+            render(
+                <BrowserRouter>
+                    <FormLogin />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
+            const button = screen.getByTestId(/back-login/i);
+            fireEvent.click(button);
+
+            expect(navigate).toHaveBeenCalled();
         });
     });
 });

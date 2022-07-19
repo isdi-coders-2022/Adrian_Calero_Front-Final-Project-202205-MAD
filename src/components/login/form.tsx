@@ -56,7 +56,11 @@ export function FormLogin() {
 
     return (
         <div>
-            <button onClick={handleBack} className="back">
+            <button
+                onClick={handleBack}
+                className="back"
+                data-testid="back-login"
+            >
                 <ArrowBackIosIcon fontSize="large" />
             </button>
             <form onSubmit={handleSubmit} className="login">
