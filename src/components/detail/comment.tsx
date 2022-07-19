@@ -107,6 +107,7 @@ export function Comment() {
                             <button
                                 onClick={() => handleDelete(review)}
                                 className="cross"
+                                data-testid="cross-comment"
                             >
                                 X
                             </button>
@@ -116,12 +117,17 @@ export function Comment() {
                 <button
                     onClick={() => handleDialog(open)}
                     className="comment-button"
+                    data-testid="comment-open"
                 >
                     Comment
                 </button>
             </ul>
             <dialog open={open}>
-                <button onClick={() => handleDialog(open)} className="cross">
+                <button
+                    onClick={() => handleDialog(open)}
+                    className="cross"
+                    data-testid="cross-close"
+                >
                     X
                 </button>
                 <form method="dialog" onSubmit={handleComment}>
