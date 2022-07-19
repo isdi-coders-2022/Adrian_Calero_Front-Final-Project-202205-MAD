@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import Swal from "sweetalert2";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const Input = styled("input")({
     display: "none",
@@ -29,20 +30,24 @@ export function Form() {
         passwd: "",
     });
 
+    function handleBack() {
+        navigate(`/registerorlogin`);
+    }
+
     function handleChange(ev: SyntheticEvent) {
         const element = ev.target as HTMLFormElement;
         setFormData({ ...formData, [element.name]: element.value });
     }
 
-    function handleUpload(ev: SyntheticEvent) {
+    async function handleUpload(ev: SyntheticEvent) {
         const element = ev.target as HTMLInputElement;
         const file = (element.files as FileList)[0];
         const avatarRef = ref(storage, `/files/${file.name}`);
-        uploadBytes(
+        await uploadBytes(
             avatarRef,
             file as unknown as Blob | Uint8Array | ArrayBuffer
         );
-        getDownloadURL(ref(storage, `/files/${file.name}`)).then(
+        await getDownloadURL(ref(storage, `/files/${file.name}`)).then(
             (url) => (formData.avatar = url)
         );
     }
@@ -82,55 +87,60 @@ export function Form() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Typography variant="subtitle1">Add avatar file:</Typography>
-            <label htmlFor="icon-button-file">
-                <Input
-                    data-testid="fileupload"
-                    id="icon-button-file"
-                    type="file"
-                    name="avatar"
-                    onChange={handleUpload}
+        <>
+            <button onClick={handleBack} className="back">
+                <ArrowBackIosIcon fontSize="large" />
+            </button>
+            <form onSubmit={handleSubmit} className="register">
+                <Typography variant="subtitle1">Add avatar file:</Typography>
+                <label htmlFor="icon-button-file">
+                    <Input
+                        data-testid="fileupload"
+                        id="icon-button-file"
+                        type="file"
+                        name="avatar"
+                        onChange={handleUpload}
+                    />
+                    <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                    >
+                        <AccountCircleIcon sx={{ fontSize: 70 }} />
+                    </IconButton>
+                </label>
+                <TextField
+                    className="inputText"
+                    label="Username"
+                    variant="outlined"
+                    name="userName"
+                    required={true}
+                    margin="normal"
+                    onChange={handleChange}
                 />
-                <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                >
-                    <AccountCircleIcon sx={{ fontSize: 50 }} />
-                </IconButton>
-            </label>
-            <TextField
-                className="inputText"
-                label="Username"
-                variant="outlined"
-                name="userName"
-                required={true}
-                margin="normal"
-                onChange={handleChange}
-            />
-            <TextField
-                className="inputText"
-                label="Email"
-                variant="outlined"
-                name="email"
-                required={true}
-                margin="normal"
-                onChange={handleChange}
-            />
-            <TextField
-                className="inputText"
-                label="Password"
-                variant="outlined"
-                name="passwd"
-                required={true}
-                type="password"
-                margin="normal"
-                onChange={handleChange}
-            />
-            <Button type="submit" variant="contained">
-                Register
-            </Button>
-        </form>
+                <TextField
+                    className="inputText"
+                    label="Email"
+                    variant="outlined"
+                    name="email"
+                    required={true}
+                    margin="normal"
+                    onChange={handleChange}
+                />
+                <TextField
+                    className="inputText"
+                    label="Password"
+                    variant="outlined"
+                    name="passwd"
+                    required={true}
+                    type="password"
+                    margin="normal"
+                    onChange={handleChange}
+                />
+                <Button type="submit" variant="contained">
+                    Register
+                </Button>
+            </form>
+        </>
     );
 }
