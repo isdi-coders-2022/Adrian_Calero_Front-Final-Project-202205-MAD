@@ -42,7 +42,7 @@ export function ListProfesional({
 
             return objects;
         }
-    }, [profesionals, local]);
+    }, [api]);
     let listProf: Promise<[] | iList[]>;
     if (local) {
         switch (order) {
@@ -166,7 +166,7 @@ export function ListProfesional({
                 </div>
             );
         }
-    }, [arrayProfWithRev, search, type, order, local]);
+    }, [type, search, order]);
 
     return render;
 }
