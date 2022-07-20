@@ -1,4 +1,5 @@
 import { iProfesional } from "../../interfaces/interfaces";
+import { listReducer } from "../../redux/list-reducer/action.reducer";
 import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
 import { reviewReducer } from "../../redux/review-reducer/action.reducer";
 import { fireEvent, render, screen } from "../../services/test.utils";
@@ -7,6 +8,7 @@ import { SearchAndFilter } from "./search&filter";
 const reducer = {
     profesional: profesionalReducer,
     review: reviewReducer,
+    list: listReducer,
 };
 const mockProfesional: iProfesional = {
     _id: "62cef4271854336fe7fe777f",
@@ -22,7 +24,11 @@ const mockProfesional: iProfesional = {
     },
 };
 
-const preloadedState = { profesional: [mockProfesional], review: [] };
+const preloadedState = {
+    profesional: [mockProfesional],
+    review: [],
+    list: [{ accum: 3, total: 2, prof: mockProfesional }],
+};
 describe("Given the component SearchAndFilter", () => {
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {

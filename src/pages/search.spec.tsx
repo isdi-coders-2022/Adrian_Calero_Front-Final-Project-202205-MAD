@@ -1,4 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
+import { listReducer } from "../redux/list-reducer/action.reducer";
 import { profesionalReducer } from "../redux/profesional-reducer/action.reducer";
 import { reviewReducer } from "../redux/review-reducer/action.reducer";
 import { userReducer } from "../redux/user-reducer/action.reducer";
@@ -12,6 +13,7 @@ const reducer = {
     profesional: profesionalReducer,
     user: userReducer,
     review: reviewReducer,
+    list: listReducer,
 };
 
 const mockProfesional = {
@@ -48,10 +50,11 @@ const preloadedState = {
         favorites: [],
     },
     review: [mockReview],
+    list: [{ accum: 3, total: 2, prof: mockProfesional }],
 };
 const login = { token: "1", id: "62c40a97add2c6f044fc6874" };
 
-describe("Given the page detail", () => {
+describe("Given the page search", () => {
     beforeEach(() => {
         LocalStorage.prototype.getItem = jest.fn().mockResolvedValue(login);
     });
