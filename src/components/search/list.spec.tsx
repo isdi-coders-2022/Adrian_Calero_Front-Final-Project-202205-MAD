@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { listReducer } from "../../redux/list-reducer/action.reducer";
 import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
 import { reviewReducer } from "../../redux/review-reducer/action.reducer";
 import { HttpReview } from "../../services/http.review";
@@ -9,6 +11,7 @@ import { ListProfesional } from "./list";
 const reducer = {
     profesional: profesionalReducer,
     review: reviewReducer,
+    list: listReducer,
 };
 
 const mockProfesional = {
@@ -27,6 +30,10 @@ const mockProfesional = {
 const preloadedState = {
     profesional: [mockProfesional],
     review: [],
+    list: [
+        { accum: 3, total: 2, prof: mockProfesional },
+        { accum: 4, total: 7, prof: { ...mockProfesional, name: "pepe" } },
+    ],
 };
 
 const login = { token: "1", id: "2" };
@@ -152,7 +159,12 @@ describe("Given the component ListProfesional", () => {
 
             expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
         });
-        test("By default case", async () => {
+        test("Else dispatch list creator", async () => {
+            const preloadedState = {
+                profesional: [mockProfesional],
+                review: [],
+                list: [],
+            };
             render(
                 <BrowserRouter>
                     <ListProfesional
@@ -164,7 +176,7 @@ describe("Given the component ListProfesional", () => {
                 { preloadedState, reducer }
             );
 
-            expect(await screen.findByAltText(/jose/i)).toBeInTheDocument();
+            expect(Promise.all).toHaveBeenCalled();
         });
     });
 });
