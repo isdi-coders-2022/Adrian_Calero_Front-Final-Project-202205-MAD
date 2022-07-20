@@ -18,11 +18,14 @@ export function ListProfesional({
     order: string | undefined;
 }) {
     const initialState = <></>;
-    const api = new HttpReview();
-    const [render, setRender] = useState(initialState);
+    const api = useMemo(() => new HttpReview(), []);
     const profesionals = useSelector(
         (state: iStore) => state.profesional as iProfesional[]
     );
+    const [filteredProfesionals, setFilteredProfesionals] = useState(
+        [] as iList[]
+    );
+
     const local = new LocalStorage().getItem();
 
     const arrayProfWithRev = useMemo(() => {
@@ -42,8 +45,26 @@ export function ListProfesional({
 
             return objects;
         }
-    }, [api]);
-    let listProf: Promise<[] | iList[]>;
+    }, [api, local, profesionals]);
+    let listProf: Promise<[] | iList[]> = new Promise((resolve) => resolve([]));
+
+    useEffect(() => {
+        if (listProf) {
+            console.log(listProf, "LISTA");
+            listProf.then((array: iList[]) => {
+                setFilteredProfesionals(
+                    array.filter(
+                        (obj) =>
+                            obj.prof.profesion === type &&
+                            obj.prof.name
+                                .toLowerCase()
+                                .includes(search as string)
+                    )
+                );
+            });
+        }
+    }, [type, search, order]);
+
     if (local) {
         switch (order) {
             case "price+":
@@ -103,70 +124,46 @@ export function ListProfesional({
                 );
                 break;
             default:
+                console.log("DEFAULT");
+                console.log(arrayProfWithRev, "ARRAY");
+
                 listProf = Promise.all(arrayProfWithRev as unknown as iList[]);
+                console.log(listProf, "SWITCH");
+
                 break;
         }
     }
 
-    useEffect(() => {
-        if (local !== null) {
-            if (listProf) {
-                listProf.then((array) => {
-                    setRender(
-                        <ul>
-                            {array
-                                .filter(
-                                    (obj) =>
-                                        obj.prof.profesion === type &&
-                                        obj.prof.name
-                                            .toLowerCase()
-                                            .includes(search as string)
-                                )
-                                .map((profesional) => (
-                                    <li
-                                        className="card-profesional"
-                                        key={profesional.prof.name}
-                                    >
-                                        <img
-                                            src={profesional.prof.avatar}
-                                            alt={profesional.prof.name}
-                                        />
-                                        <div>
-                                            <p>{profesional.prof.name}</p>
-                                            <Rating
-                                                name="media-score"
-                                                value={
-                                                    profesional.accum /
-                                                    profesional.total
-                                                }
-                                            />
-                                            <p>
-                                                {profesional.prof.info.price}{" "}
-                                                $/h
-                                            </p>
-                                        </div>
-                                        <p>{profesional.total} Votes</p>
-                                        <Link
-                                            to={`/detail/${profesional.prof._id}`}
-                                        >
-                                            i
-                                        </Link>
-                                    </li>
-                                ))}
-                        </ul>
-                    );
-                });
-            } else {
-                setRender(initialState);
-            }
-        } else {
-            setRender(
-                <div className="lock">
-                    <LockIcon sx={{ fontSize: 120, color: "#023E8A" }} />
-                </div>
-            );
-        }
-    }, [type, search, order]);
-
-    return render;
+    if (!local) {
+        return (
+            <div className="lock">
+                <LockIcon sx={{ fontSize: 120, color: "#023E8A" }} />
+            </div>
+        );
+    }
+    if (!listProf) {
+        return initialState;
+    }
+    return (
+        <ul>
+            {filteredProfesionals.map((profesional) => (
+                <li className="card-profesional" key={profesional.prof.name}>
+                    <img
+                        src={profesional.prof.avatar}
+                        alt={profesional.prof.name}
+                    />
+                    <div>
+                        <p>{profesional.prof.name}</p>
+                        <Rating
+                            name="media-score"
+                            value={profesional.accum / profesional.total}
+                        />
+                        <p>{profesional.prof.info.price} $/h</p>
+                    </div>
+                    <p>{profesional.total} Votes</p>
+                    <Link to={`/detail/${profesional.prof._id}`}>i</Link>
+                </li>
+            ))}
+        </ul>
+    );
 }
