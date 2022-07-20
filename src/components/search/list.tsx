@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { iList, iProfesional } from "../../interfaces/interfaces";
 import { iStore } from "../../store/store";
 import { Link } from "react-router-dom";
 import { HttpReview } from "../../services/http.review";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Rating } from "@mui/material";
 import { LocalStorage } from "../../services/localStorage";
 import LockIcon from "@mui/icons-material/Lock";
+import * as ac from "../../redux/list-reducer/action.creator";
 
 export function ListProfesional({
     type,
@@ -18,17 +19,16 @@ export function ListProfesional({
     order: string | undefined;
 }) {
     const initialState = <></>;
+    const dispatch = useDispatch();
     const api = useMemo(() => new HttpReview(), []);
     const profesionals = useSelector(
         (state: iStore) => state.profesional as iProfesional[]
     );
-    const [filteredProfesionals, setFilteredProfesionals] = useState(
-        [] as iList[]
-    );
+    const list = useSelector((state: iStore) => state.list as iList[]);
 
     const local = new LocalStorage().getItem();
 
-    const arrayProfWithRev = useMemo(() => {
+    const listCreator = useMemo(() => {
         if (local) {
             const objects = profesionals.map(async (prof) => {
                 return await api
@@ -45,94 +45,58 @@ export function ListProfesional({
 
             return objects;
         }
-    }, [api, local, profesionals]);
-    let listProf: Promise<[] | iList[]> = new Promise((resolve) => resolve([]));
+    }, [local, profesionals, api]);
 
     useEffect(() => {
-        if (listProf) {
-            console.log(listProf, "LISTA");
-            listProf.then((array: iList[]) => {
-                setFilteredProfesionals(
-                    array.filter(
-                        (obj) =>
-                            obj.prof.profesion === type &&
-                            obj.prof.name
-                                .toLowerCase()
-                                .includes(search as string)
-                    )
-                );
+        if (list.length !== 0) {
+            let orderList = [...list];
+            switch (order) {
+                case "price+":
+                    orderList.sort(function (a, b) {
+                        return b.prof.info.price - a.prof.info.price;
+                    });
+
+                    break;
+                case "price-":
+                    orderList.sort(function (a, b) {
+                        return a.prof.info.price - b.prof.info.price;
+                    });
+
+                    break;
+
+                case "votes+":
+                    orderList.sort(function (a, b) {
+                        return b.total - a.total;
+                    });
+
+                    break;
+                case "votes-":
+                    orderList.sort(function (a, b) {
+                        return a.total - b.total;
+                    });
+
+                    break;
+                case "rating+":
+                    orderList.sort(function (a, b) {
+                        return b.accum / b.total - a.accum / a.total;
+                    });
+
+                    break;
+                case "rating-":
+                    orderList.sort(function (a, b) {
+                        return a.accum / a.total - b.accum / b.total;
+                    });
+
+                    break;
+            }
+
+            dispatch(ac.setListAction(orderList));
+        } else {
+            Promise.all(listCreator as unknown as iList[]).then((array) => {
+                dispatch(ac.setListAction(array));
             });
         }
-    }, [type, search, order]);
-
-    if (local) {
-        switch (order) {
-            case "price+":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return b.prof.info.price - a.prof.info.price;
-                    })
-                );
-
-                break;
-            case "price-":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return a.prof.info.price - b.prof.info.price;
-                    })
-                );
-                break;
-
-            case "votes+":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return b.total - a.total;
-                    })
-                );
-                break;
-            case "votes-":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return a.total - b.total;
-                    })
-                );
-                break;
-            case "rating+":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return b.accum / b.total - a.accum / a.total;
-                    })
-                );
-                break;
-            case "rating-":
-                listProf = Promise.all(
-                    arrayProfWithRev as unknown as iList[]
-                ).then((array) =>
-                    array.sort(function (a, b) {
-                        return a.accum / a.total - b.accum / b.total;
-                    })
-                );
-                break;
-            default:
-                console.log("DEFAULT");
-                console.log(arrayProfWithRev, "ARRAY");
-
-                listProf = Promise.all(arrayProfWithRev as unknown as iList[]);
-                console.log(listProf, "SWITCH");
-
-                break;
-        }
-    }
+    }, [dispatch, order]);
 
     if (!local) {
         return (
@@ -141,29 +105,38 @@ export function ListProfesional({
             </div>
         );
     }
-    if (!listProf) {
+    if (list.length === 0) {
         return initialState;
     }
     return (
         <ul>
-            {filteredProfesionals.map((profesional) => (
-                <li className="card-profesional" key={profesional.prof.name}>
-                    <img
-                        src={profesional.prof.avatar}
-                        alt={profesional.prof.name}
-                    />
-                    <div>
-                        <p>{profesional.prof.name}</p>
-                        <Rating
-                            name="media-score"
-                            value={profesional.accum / profesional.total}
+            {list
+                .filter(
+                    (obj) =>
+                        obj.prof.profesion === type &&
+                        obj.prof.name.toLowerCase().includes(search as string)
+                )
+                .map((profesional) => (
+                    <li
+                        className="card-profesional"
+                        key={profesional.prof.name}
+                    >
+                        <img
+                            src={profesional.prof.avatar}
+                            alt={profesional.prof.name}
                         />
-                        <p>{profesional.prof.info.price} $/h</p>
-                    </div>
-                    <p>{profesional.total} Votes</p>
-                    <Link to={`/detail/${profesional.prof._id}`}>i</Link>
-                </li>
-            ))}
+                        <div>
+                            <p>{profesional.prof.name}</p>
+                            <Rating
+                                name="media-score"
+                                value={profesional.accum / profesional.total}
+                            />
+                            <p>{profesional.prof.info.price} $/h</p>
+                        </div>
+                        <p>{profesional.total} Votes</p>
+                        <Link to={`/detail/${profesional.prof._id}`}>i</Link>
+                    </li>
+                ))}
         </ul>
     );
 }
