@@ -1,6 +1,4 @@
 export class LocalStorage {
-    constructor() {}
-
     setItem(token: string, id: string) {
         localStorage.setItem("login", JSON.stringify({ token: token, id: id }));
     }
