@@ -19,8 +19,13 @@ body {
     align-items: center;
     margin-bottom: 3rem;
     font-size: 3rem;
-    font-family: "Old Church";
 }
+
+.header-auth h2,
+h6 {
+    font-family: "Old Church" !important;
+}
+
 
 .buttons-container {
     height: 35vh;
