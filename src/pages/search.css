@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
-body,
-html {
-    background-color: #ADE8F4;
-}
 
 header {
     display: flex;
@@ -39,11 +35,6 @@ header {
     background-color: #0096C7;
 }
 
-.navigation {
-    background-color: #023E8A;
-
-
-}
 
 li img {
     width: 8rem;
@@ -76,7 +67,7 @@ ul a {
     align-items: center;
     border: 1px solid black;
     border-radius: 2rem;
-    margin: 1rem;
+    margin: 1rem 2rem;
     background-color: #90E0EF;
 
 }

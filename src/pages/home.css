@@ -1,12 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+@import url('//db.onlinewebfonts.com/c/3a5af446226c125207a9a09c9e1abd30?family=Old+Church');
+@import url('http://fonts.cdnfonts.com/css/berlin-sans-fb-demi');
 
 * {
     box-sizing: border-box;
     list-style: none;
     margin: 0;
     padding: 0;
-    font-family: 'Fira Sans', sans-serif;
+}
+
+p,
+button,
+a,
+input,
+h4,
+h3,
+select,
+label,
+textarea {
+    font-family: 'Berlin Sans FB Demi', sans-serif;
+    font-weight: 200;
+
 }
 
 body,
@@ -18,12 +31,17 @@ header {
     display: flex;
     justify-content: end;
     text-align: center;
-    margin-top: 2rem;
+
+}
+
+.div {
+    margin: 1rem;
 }
 
 .title h1 {
     color: #03045E;
     font-size: 3rem;
+    font-family: "Old Church";
 }
 
 .title-center {
@@ -70,7 +88,6 @@ header {
     display: flex;
     align-items: center;
     bottom: 0;
-    left: 0;
     position: fixed;
     justify-content: space-around;
 }
@@ -87,6 +104,7 @@ header {
 }
 
 .body-home {
+
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -95,6 +113,7 @@ header {
 }
 
 .body-home h3 {
+    margin-top: 2rem;
     color: #03045E;
     font-size: x-large;
 
@@ -115,6 +134,9 @@ header {
     flex-direction: row-reverse;
     margin-left: 1rem;
     align-items: center;
+    -webkit-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 
