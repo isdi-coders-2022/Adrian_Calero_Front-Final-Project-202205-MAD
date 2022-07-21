@@ -56,9 +56,9 @@ describe("Given the component SearchAndFilter", () => {
 
             const input = screen.getByTestId("profesion");
 
-            fireEvent.change(input, { target: { value: "pompler" } });
+            fireEvent.change(input, { target: { value: "plumber" } });
 
-            expect(input).toHaveValue("pompler");
+            expect(input).toHaveValue("plumber");
         });
     });
 

@@ -14,6 +14,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import Swal from "sweetalert2";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import CheckIcon from "@mui/icons-material/Check";
 
 const Input = styled("input")({
     display: "none",
@@ -22,7 +23,7 @@ const Input = styled("input")({
 export function Form() {
     const api = new HttpUser();
     const navigate = useNavigate();
-
+    const [charged, setCharged] = useState(false);
     const [formData, setFormData] = useState({
         avatar: "",
         userName: "",
@@ -43,13 +44,16 @@ export function Form() {
         const element = ev.target as HTMLInputElement;
         const file = (element.files as FileList)[0];
         const avatarRef = ref(storage, `/files/${file.name}`);
-        await uploadBytes(
+        const feedback = await uploadBytes(
             avatarRef,
             file as unknown as Blob | Uint8Array | ArrayBuffer
         );
         await getDownloadURL(ref(storage, `/files/${file.name}`)).then(
             (url) => (formData.avatar = url)
         );
+        if (feedback) {
+            setCharged(true);
+        }
     }
 
     function handleSubmit(ev: SyntheticEvent) {
@@ -112,6 +116,12 @@ export function Form() {
                     >
                         <AccountCircleIcon sx={{ fontSize: 70 }} />
                     </IconButton>
+                    {charged && (
+                        <CheckIcon
+                            data-testid="check"
+                            sx={{ fontSize: 50, color: "#023E8A" }}
+                        />
+                    )}
                 </label>
                 <TextField
                     className="inputText"
