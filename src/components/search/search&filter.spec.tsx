@@ -1,3 +1,4 @@
+import { BrowserRouter } from "react-router-dom";
 import { iProfesional } from "../../interfaces/interfaces";
 import { listReducer } from "../../redux/list-reducer/action.reducer";
 import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
@@ -30,9 +31,31 @@ const preloadedState = {
     list: [{ accum: 3, total: 2, prof: mockProfesional }],
 };
 describe("Given the component SearchAndFilter", () => {
+    beforeEach(() => {
+        Promise.all = jest.fn().mockResolvedValue([
+            {
+                accum: 1,
+                total: 1,
+                prof: mockProfesional,
+            },
+            {
+                accum: 1,
+                total: 1,
+                prof: {
+                    ...mockProfesional,
+                    name: "antonio",
+                },
+            },
+        ]);
+    });
     describe("When I render the component", () => {
         test("Then it should be rendered", () => {
-            render(<SearchAndFilter />, { preloadedState, reducer });
+            render(
+                <BrowserRouter>
+                    <SearchAndFilter />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
 
             expect(screen.getByRole("textbox")).toBeInTheDocument();
         });
@@ -40,7 +63,12 @@ describe("Given the component SearchAndFilter", () => {
 
     describe("When I search something", () => {
         test("Then it should be changed", () => {
-            render(<SearchAndFilter />, { preloadedState, reducer });
+            render(
+                <BrowserRouter>
+                    <SearchAndFilter />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
 
             const input = screen.getByTestId("search");
 
@@ -52,7 +80,12 @@ describe("Given the component SearchAndFilter", () => {
 
     describe("When I select other value", () => {
         test("Then it should be changed", () => {
-            render(<SearchAndFilter />, { preloadedState, reducer });
+            render(
+                <BrowserRouter>
+                    <SearchAndFilter />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
 
             const input = screen.getByTestId("profesion");
 
@@ -64,7 +97,12 @@ describe("Given the component SearchAndFilter", () => {
 
     describe("When I select other value for order", () => {
         test("Then it should be changed", () => {
-            render(<SearchAndFilter />, { preloadedState, reducer });
+            render(
+                <BrowserRouter>
+                    <SearchAndFilter />
+                </BrowserRouter>,
+                { preloadedState, reducer }
+            );
 
             const input = screen.getByTestId("order");
 
