@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { Done } from "@mui/icons-material";
 import { BrowserRouter } from "react-router-dom";
 import { listReducer } from "../../redux/list-reducer/action.reducer";
 import { profesionalReducer } from "../../redux/profesional-reducer/action.reducer";
@@ -13,7 +13,6 @@ const reducer = {
     review: reviewReducer,
     list: listReducer,
 };
-
 const mockProfesional = {
     _id: "62cef4271854336fe7fe777f",
     avatar: "https://firebasestorage.googleapis.com/v0/b/proyect-files.appspot.com/...",
@@ -27,9 +26,29 @@ const mockProfesional = {
         video: "https://firebasestorage.googleapis.com/v0/b/proyect-files.appspot.com/...",
     },
 };
+const mockReview = {
+    _id: "1",
+    worker: mockProfesional,
+    client: {
+        _id: "2",
+        avatar: "url",
+        userName: "test",
+        email: "test@gmail.com",
+        passwd: "1234",
+        favorites: [],
+    },
+    date: "1-02-1111",
+    reviews: {
+        img: [],
+        video: [],
+        comment: "test",
+        score: 1,
+    },
+};
+
 const preloadedState = {
     profesional: [mockProfesional],
-    review: [],
+    review: [mockReview, mockReview],
     list: [
         { accum: 3, total: 2, prof: mockProfesional },
         { accum: 4, total: 7, prof: { ...mockProfesional, name: "pepe" } },
@@ -42,31 +61,19 @@ describe("Given the component ListProfesional", () => {
         LocalStorage.prototype.getItem = jest.fn().mockResolvedValue(login);
         HttpReview.prototype.getAllInProfesionals = jest
             .fn()
-            .mockResolvedValue([
-                { reviews: { score: 1 } },
-                { reviews: { score: 2 } },
-            ]);
+            .mockResolvedValue([mockReview, mockReview]);
         Promise.all = jest.fn().mockResolvedValue([
             {
                 accum: 1,
                 total: 1,
-                prof: {
-                    _id: "1",
-                    name: "jose",
-                    avatar: "url",
-                    profesion: "arquitect",
-                    info: { price: 5 },
-                },
+                prof: mockProfesional,
             },
             {
                 accum: 1,
                 total: 1,
                 prof: {
-                    _id: "2",
+                    ...mockProfesional,
                     name: "antonio",
-                    avatar: "url",
-                    profesion: "arquitect",
-                    info: { price: 5 },
                 },
             },
         ]);

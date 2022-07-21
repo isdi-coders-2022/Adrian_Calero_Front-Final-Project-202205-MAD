@@ -1,3 +1,5 @@
+@import url('//db.onlinewebfonts.com/c/3a5af446226c125207a9a09c9e1abd30?family=Old+Church');
+
 * {
     box-sizing: border-box;
     list-style: none;
@@ -7,6 +9,8 @@ html,
 body {
     margin: 0;
     padding: 0;
+    overflow: auto;
+    height: 100%;
 }
 
 .header-auth {
@@ -14,6 +18,8 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 3rem;
+    font-size: 3rem;
+    font-family: "Old Church";
 }
 
 .buttons-container {

@@ -59,7 +59,7 @@ export function SearchAndFilter() {
                 >
                     <option value="electrician">Electrician</option>
                     <option value="mechanic">Mechanic</option>
-                    <option value="pompler">Pompler</option>
+                    <option value="plumber">Plumber</option>
                     <option value="arquitect">Arquitect</option>
                     <option value="painter">Painter</option>
                     <option value="shipper">Shipper</option>

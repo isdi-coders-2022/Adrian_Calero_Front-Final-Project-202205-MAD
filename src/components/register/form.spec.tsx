@@ -64,7 +64,7 @@ describe("Given the component Form", () => {
     });
 
     describe("When i click the button Register", () => {
-        test("Then it should be called the api fetch", () => {
+        test("Then it should be called the api fetch", async () => {
             (useNavigate as jest.Mock).mockReturnValue(navigate);
             render(
                 <BrowserRouter>
@@ -97,6 +97,7 @@ describe("Given the component Form", () => {
             fireEvent.click(screen.getByText(/Register/i));
 
             expect(HttpUser).toHaveBeenCalled();
+            expect(await screen.findByTestId("check")).toBeInTheDocument();
         });
     });
 

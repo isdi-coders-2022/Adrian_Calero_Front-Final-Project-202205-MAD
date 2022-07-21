@@ -50,7 +50,6 @@ export function FormUpdate() {
         await getDownloadURL(ref(storage, `/files/${file.name}`)).then(
             (url: string) => (formData.avatar = url)
         );
-        console.log(feedback);
 
         if (feedback) {
             setCharged(true);

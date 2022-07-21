@@ -93,13 +93,24 @@ export function Comment() {
                 <h3>Reviews</h3>
                 {reviews?.map((review) => (
                     <li key={review._id}>
-                        <div>
-                            <h4>{review.client?.userName}</h4>
+                        <div className="info">
+                            <h4>
+                                {
+                                    ((review.client.userName
+                                        ?.charAt(0)
+                                        .toUpperCase() as string) +
+                                        review.client.userName?.slice(
+                                            1
+                                        )) as string
+                                }
+                            </h4>
                             <Rating
                                 name="rating"
                                 value={review.reviews?.score}
                             />
                             <p>{review?.date}</p>
+                        </div>
+                        <div className="text-comment">
                             <p>{review.reviews?.comment}</p>
                         </div>
 
@@ -122,7 +133,7 @@ export function Comment() {
                     Comment
                 </button>
             </ul>
-            <dialog open={open}>
+            <dialog open={open} className="animate__bounce">
                 <button
                     onClick={() => handleDialog(open)}
                     className="cross"

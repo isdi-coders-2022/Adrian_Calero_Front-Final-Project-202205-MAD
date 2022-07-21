@@ -14,6 +14,19 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 3rem;
+
+}
+
+.header-auth h2 h6 {
+    font-family: "Old Church";
+}
+
+
+.back {
+    margin-left: 2rem;
+    background: none;
+    border: none;
+    color: #023E8A;
 }
 
 
