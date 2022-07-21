@@ -17,7 +17,7 @@ h3,
 select,
 label,
 textarea {
-    font-family: 'Berlin Sans FB Demi', sans-serif;
+    font-family: 'Berlin Sans FB Demi', sans-serif !important;
     font-weight: 200;
 
 }
@@ -41,7 +41,7 @@ header {
 .title h1 {
     color: #03045E;
     font-size: 3rem;
-    font-family: "Old Church";
+    font-family: "Old Church" !important;
 }
 
 .title-center {
