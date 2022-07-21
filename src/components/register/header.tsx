@@ -1,12 +1,10 @@
-import { Typography } from "@mui/material";
-
 export function HeaderRegister() {
     return (
         <header className="header-auth">
-            <Typography variant="h6">FIX</Typography>
-            <Typography variant="h2">YOUR</Typography>
-            <Typography variant="h6">PROBLEM WITH</Typography>
-            <Typography variant="h2">SOLUTION</Typography>
+            <h6>FIX</h6>
+            <h2>YOUR</h2>
+            <h6>PROBLEM WITH</h6>
+            <h2>SOLUTION</h2>
         </header>
     );
 }
