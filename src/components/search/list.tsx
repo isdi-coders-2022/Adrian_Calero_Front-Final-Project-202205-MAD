@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { iList, iProfesional } from "../../interfaces/interfaces";
+import { iList, iProfesional, iReview } from "../../interfaces/interfaces";
 import { iStore } from "../../store/store";
 import { Link } from "react-router-dom";
 import { HttpReview } from "../../services/http.review";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Rating } from "@mui/material";
 import { LocalStorage } from "../../services/localStorage";
 import LockIcon from "@mui/icons-material/Lock";
@@ -25,10 +25,11 @@ export function ListProfesional({
         (state: iStore) => state.profesional as iProfesional[]
     );
     const list = useSelector((state: iStore) => state.list as iList[]);
+    const reviews = useSelector((state: iStore) => state.review as iReview[]);
 
     const local = new LocalStorage().getItem();
 
-    const listCreator = useMemo(() => {
+    const listCreator = useCallback(() => {
         if (local) {
             const objects = profesionals.map(async (prof) => {
                 return await api
@@ -46,6 +47,14 @@ export function ListProfesional({
             return objects;
         }
     }, [local, profesionals, api]);
+
+    useEffect(() => {
+        Promise.all(listCreator() as unknown as Array<Promise<iList>>).then(
+            (array) => {
+                dispatch(ac.setListAction(array));
+            }
+        );
+    }, [dispatch, reviews, api]);
 
     useEffect(() => {
         if (list.length !== 0) {
@@ -91,12 +100,8 @@ export function ListProfesional({
             }
 
             dispatch(ac.setListAction(orderList));
-        } else {
-            Promise.all(listCreator as unknown as iList[]).then((array) => {
-                dispatch(ac.setListAction(array));
-            });
         }
-    }, [dispatch, order]);
+    }, [order]);
 
     if (!local) {
         return (
