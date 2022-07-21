@@ -29,7 +29,10 @@ export function HeaderHome() {
                     ) : (
                         <img alt={user.userName} src={user.avatar} />
                     )}
-                    <h4>{user.userName}</h4>
+                    <h4>
+                        {user.userName?.charAt(0).toUpperCase() +
+                            user.userName?.slice(1)}
+                    </h4>
                 </div>
             ) : (
                 <></>
